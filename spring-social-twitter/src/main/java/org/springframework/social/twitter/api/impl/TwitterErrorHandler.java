@@ -100,7 +100,8 @@ public class TwitterErrorHandler extends DefaultResponseErrorHandler {
                             treatedErrorCode.equals("MISSING_PARAMETER") ||
                             treatedErrorCode.equals("INVALID_PARAMETER") ||
                             treatedErrorCode.equals("INVALID") ||
-                            treatedErrorCode.equals("INVALID_DENOMINATION");
+                            treatedErrorCode.equals("INVALID_DENOMINATION") ||
+                            treatedErrorCode.equals("INVALID_TIME_WINDOW");
 
                     if (isValidationError) {
                         validationErrors.add(error.get("message"));
