@@ -42,6 +42,7 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class Campaign extends TwitterObject {
+	private static final long serialVersionUID = 1L;
 	private final String id;
 	private final String accountId;
 	private final String name;

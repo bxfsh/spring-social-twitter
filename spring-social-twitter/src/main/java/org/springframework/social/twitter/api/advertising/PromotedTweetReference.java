@@ -27,7 +27,8 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class PromotedTweetReference extends TwitterObject {
-    private final String id;
+	private static final long serialVersionUID = 1L;
+	private final String id;
     private final String lineItemId;
     private final Long tweetId;
     private final Boolean paused;

@@ -24,6 +24,7 @@ package org.springframework.social.twitter.api;
  * @author Craig Walls
  */
 public class OEmbedTweet extends TwitterObject {
+	private static final long serialVersionUID = 1L;
 
 	private String type;
 	private String version;

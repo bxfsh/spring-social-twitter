@@ -22,6 +22,7 @@ package org.springframework.social.twitter.api;
  * @author Craig Walls
  */
 public class UserList extends TwitterObject {
+	private static final long serialVersionUID = 1L;
 	private final long id;
 	private final String name;
 	private final String fullName;

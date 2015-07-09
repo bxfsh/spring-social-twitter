@@ -26,6 +26,7 @@ import org.springframework.social.twitter.api.impl.SearchMetadata;
  * @author Craig Walls
  */
 public class SearchResults extends TwitterObject {
+	private static final long serialVersionUID = 1L;
 	private List<Tweet> tweets;
 	private SearchMetadata metadata;
 	private boolean lastPage;

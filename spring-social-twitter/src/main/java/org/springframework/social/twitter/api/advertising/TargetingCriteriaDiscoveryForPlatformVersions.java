@@ -24,6 +24,7 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class TargetingCriteriaDiscoveryForPlatformVersions extends TwitterObject {
+	private static final long serialVersionUID = 1L;
     private final String name;
     private final String number;
     private final String platform;

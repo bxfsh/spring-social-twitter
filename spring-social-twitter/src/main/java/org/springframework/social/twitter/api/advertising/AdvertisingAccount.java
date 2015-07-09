@@ -36,6 +36,7 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class AdvertisingAccount extends TwitterObject {
+	private static final long serialVersionUID = 1L;
 	private final String id;
 	private final String name;
 	private final String salt;

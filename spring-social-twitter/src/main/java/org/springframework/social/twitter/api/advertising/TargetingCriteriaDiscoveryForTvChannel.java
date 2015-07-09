@@ -24,6 +24,7 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class TargetingCriteriaDiscoveryForTvChannel extends TwitterObject {
+	private static final long serialVersionUID = 1L;
     private final Long id;
     private final String name;
 

@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 import org.springframework.social.twitter.api.TwitterObject;
 
 public class PromotableUser extends TwitterObject {
-    private final Long userId;
+	private static final long serialVersionUID = 1987591937358157578L;
+	private final Long userId;
     private final String id;
     private final String accountId;
     private final String promotableUserType;

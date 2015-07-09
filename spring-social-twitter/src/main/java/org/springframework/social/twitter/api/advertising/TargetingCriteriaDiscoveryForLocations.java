@@ -24,6 +24,7 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class TargetingCriteriaDiscoveryForLocations extends TwitterObject {
+	private static final long serialVersionUID = 1L;
     private final String name;
     private final String locationType;
     private final String targetingType;

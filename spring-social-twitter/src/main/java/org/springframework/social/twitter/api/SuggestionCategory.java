@@ -22,6 +22,7 @@ package org.springframework.social.twitter.api;
  * @author Craig Walls
  */
 public class SuggestionCategory extends TwitterObject {
+	private static final long serialVersionUID = 1L;
 	private final String name;
 	private final String slug;
 	private final int size;
