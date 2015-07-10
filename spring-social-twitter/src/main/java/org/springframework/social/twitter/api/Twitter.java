@@ -25,6 +25,7 @@ import org.springframework.social.twitter.api.advertising.TailoredAudienceOperat
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryOperations;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaOperations;
 import org.springframework.social.twitter.api.ton.TonOperations;
+import org.springframework.social.twitter.api.upload.UploadOperations;
 import org.springframework.web.client.RestOperations;
 
 
@@ -126,6 +127,11 @@ public interface Twitter extends ApiBinding {
      * @return the Twitter Object Nest operations.
      */
     TonOperations tonOperations();
+
+    /**
+     * @return operations for uploading non-chunked media.
+     */
+    UploadOperations uploadOperations();
 
     /**
      * Returns the underlying {@link RestOperations} object allowing for consumption of Twitter endpoints that may not be otherwise covered by the API
