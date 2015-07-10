@@ -17,6 +17,7 @@ package org.springframework.social.twitter.api.impl.advertising;
 
 import org.springframework.social.twitter.api.TwitterQueryForEntity;
 import org.springframework.social.twitter.api.TwitterQueryForSortableEntity;
+import org.springframework.social.twitter.api.advertising.SortDirection;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -27,7 +28,7 @@ import org.springframework.util.MultiValueMap;
  * and therefore we cannot use this base builder for _everything_. However,
  * it's reasonable the Twitter moves towards standardization and then, this
  * builder will become a richer asset to the Api.
- * 
+ *
  * @author Hudson Mendes
  *
  * @param <TSort> the sort enumberation that varies for each entity being requested.
@@ -37,6 +38,7 @@ public abstract class AbstractTwitterQueryForSortableEntityBuilder<TBuilderInter
         implements TwitterQueryForSortableEntity<TBuilderInterface, TSort> {
 
     private TSort sort;
+    private SortDirection direction;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -46,18 +48,37 @@ public abstract class AbstractTwitterQueryForSortableEntityBuilder<TBuilderInter
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    public TBuilderInterface sortBy(TSort sort, SortDirection direction) {
+        this.sort = sort;
+        this.direction = direction;
+        return (TBuilderInterface) this;
+    }
+
+    @Override
     public MultiValueMap<String, String> toQueryParameters() {
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
         makeParameters(map);
 
-        MultiValueMap<String, String> parentMap = super.toQueryParameters();
-        for (String parentKey : parentMap.keySet())
+        final MultiValueMap<String, String> parentMap = super.toQueryParameters();
+        for (final String parentKey : parentMap.keySet())
             if (parentMap.get(parentKey).size() != 0)
                 appendParameter(map, parentKey, parentMap.get(parentKey).get(0));
 
-        if (this.sort != null)
-            appendParameter(map, "sort", this.sort);
+        final String sort = this.makeSort();
+        if (sort != null)
+            appendParameter(map, "sort", sort);
 
         return map;
+    }
+
+    private String makeSort() {
+        if (this.sort == null && this.direction == null)
+            return null;
+
+        if (this.direction != null)
+            return this.sort + "-" + this.direction.name();
+
+        return this.sort.toString();
     }
 }

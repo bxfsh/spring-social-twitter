@@ -15,6 +15,8 @@
  */
 package org.springframework.social.twitter.api;
 
+import org.springframework.social.twitter.api.advertising.SortDirection;
+
 
 /**
  * Generic data query builder contract that can be used to build
@@ -31,4 +33,5 @@ public interface TwitterQueryForSortableEntity<TBuilderInterface extends Twitter
         TwitterQueryForEntity<TBuilderInterface> {
 
     public TBuilderInterface sortBy(TSort sort);
+    public TBuilderInterface sortBy(TSort sort, SortDirection direction);
 }

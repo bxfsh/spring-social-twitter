@@ -1,12 +1,12 @@
 /*
  * Copyright 2014 the original author or authors.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,6 +26,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.social.twitter.api.advertising.AppStore;
+import org.springframework.social.twitter.api.advertising.SortDirection;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForAppStoreCategories;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForBehaviorTaxonomies;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForBehaviors;
@@ -51,12 +52,13 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void appStoreCategories() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/app_store_categories"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-app_store_categories"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/app_store_categories"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-app_store_categories"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForAppStoreCategories> discoveries = twitter.targetingCriteriaDiscoveryOperations().appStoreCategories(
-                new TargetingCriteriaDiscoveryForAppStoreCategoriesQueryBuilder());
+        final DataListHolder<TargetingCriteriaDiscoveryForAppStoreCategories> discoveries =
+                twitter.targetingCriteriaDiscoveryOperations().appStoreCategories(
+                        new TargetingCriteriaDiscoveryForAppStoreCategoriesQueryBuilder());
 
         assertAppStoreCategoriesDiscoveries(discoveries.getList());
     }
@@ -78,14 +80,15 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void appStoreCategoriesWithParams() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/app_store_categories?store=GOOGLE_PLAY&q=music"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-app_store_categories-params"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/app_store_categories?store=GOOGLE_PLAY&q=music"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-app_store_categories-params"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForAppStoreCategories> discoveries = twitter.targetingCriteriaDiscoveryOperations().appStoreCategories(
-                new TargetingCriteriaDiscoveryForAppStoreCategoriesQueryBuilder()
-                		.inAppStore(AppStore.GOOGLE_PLAY)
-                		.withQuery("music"));
+        final DataListHolder<TargetingCriteriaDiscoveryForAppStoreCategories> discoveries =
+                twitter.targetingCriteriaDiscoveryOperations().appStoreCategories(
+                        new TargetingCriteriaDiscoveryForAppStoreCategoriesQueryBuilder()
+                                .inAppStore(AppStore.GOOGLE_PLAY)
+                                .withQuery("music"));
 
         assertAppStoreCategoriesDiscoveriesWithParams(discoveries.getList());
     }
@@ -102,12 +105,13 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void behaviorTaxonomies() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/behavior_taxonomies"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-behavior_taxonomies"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/behavior_taxonomies"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-behavior_taxonomies"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForBehaviorTaxonomies> discoveries = twitter.targetingCriteriaDiscoveryOperations().behaviorTaxonomies(
-                new TargetingCriteriaDiscoveryForBehaviorTaxonomiesQueryBuilder());
+        final DataListHolder<TargetingCriteriaDiscoveryForBehaviorTaxonomies> discoveries =
+                twitter.targetingCriteriaDiscoveryOperations().behaviorTaxonomies(
+                        new TargetingCriteriaDiscoveryForBehaviorTaxonomiesQueryBuilder());
 
         assertBehaviorTaxonomiesDiscoveries(discoveries.getList());
     }
@@ -131,14 +135,15 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void behaviorTaxonomiesWithParams() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/behavior_taxonomies?behavior_taxonomy_ids=33&parent_behavior_taxonomy_ids=31"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-behavior_taxonomies-params"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/behavior_taxonomies?behavior_taxonomy_ids=33&parent_behavior_taxonomy_ids=31"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-behavior_taxonomies-params"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForBehaviorTaxonomies> discoveries = twitter.targetingCriteriaDiscoveryOperations().behaviorTaxonomies(
-                new TargetingCriteriaDiscoveryForBehaviorTaxonomiesQueryBuilder()
-                		.ofParentTaxonomyIds("31")
-                		.ofTaxonomyIds("33"));
+        final DataListHolder<TargetingCriteriaDiscoveryForBehaviorTaxonomies> discoveries =
+                twitter.targetingCriteriaDiscoveryOperations().behaviorTaxonomies(
+                        new TargetingCriteriaDiscoveryForBehaviorTaxonomiesQueryBuilder()
+                                .ofParentTaxonomyIds("31")
+                                .ofTaxonomyIds("33"));
 
         assertBehaviorTaxonomiesDiscoveriesWithParams(discoveries.getList());
     }
@@ -156,11 +161,11 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void behaviors() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/behaviors"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-behaviors"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/behaviors"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-behaviors"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForBehaviors> discoveries = twitter.targetingCriteriaDiscoveryOperations().behaviors(
+        final DataListHolder<TargetingCriteriaDiscoveryForBehaviors> discoveries = twitter.targetingCriteriaDiscoveryOperations().behaviors(
                 new TargetingCriteriaDiscoveryForBehaviorsQueryBuilder());
 
         assertBehaviorsDiscoveries(discoveries.getList());
@@ -185,14 +190,14 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void behaviorsWithParams() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/behaviors?behavior_ids=lfrz&sort_by=name-asc"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-behaviors-params"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/behaviors?behavior_ids=lfrz&sort_by=name-asc"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-behaviors-params"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForBehaviors> discoveries = twitter.targetingCriteriaDiscoveryOperations().behaviors(
+        final DataListHolder<TargetingCriteriaDiscoveryForBehaviors> discoveries = twitter.targetingCriteriaDiscoveryOperations().behaviors(
                 new TargetingCriteriaDiscoveryForBehaviorsQueryBuilder()
-                	.ofBehaviors("lfrz")
-                	.sortBy("name", "asc"));
+                        .ofBehaviors("lfrz")
+                        .sortBy("name", SortDirection.asc));
 
         assertBehaviorsDiscoveriesWithParams(discoveries.getList());
     }
@@ -210,11 +215,11 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void devices() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/devices"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-devices"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/devices"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-devices"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForDevices> discoveries = twitter.targetingCriteriaDiscoveryOperations().devices(
+        final DataListHolder<TargetingCriteriaDiscoveryForDevices> discoveries = twitter.targetingCriteriaDiscoveryOperations().devices(
                 new TargetingCriteriaDiscoveryForDevicesQueryBuilder());
 
         assertDevicesDiscoveries(discoveries.getList());
@@ -230,13 +235,13 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void devicesWithParams() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/devices?q=apple"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-devices-params"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/devices?q=apple"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-devices-params"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForDevices> discoveries = twitter.targetingCriteriaDiscoveryOperations().devices(
+        final DataListHolder<TargetingCriteriaDiscoveryForDevices> discoveries = twitter.targetingCriteriaDiscoveryOperations().devices(
                 new TargetingCriteriaDiscoveryForDevicesQueryBuilder()
-                	.withQuery("apple"));
+                        .withQuery("apple"));
 
         assertDevicesDiscoveriesWithParams(discoveries.getList());
     }
@@ -251,11 +256,11 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void interests() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/interests"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-interests"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/interests"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-interests"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForInterests> discoveries = twitter.targetingCriteriaDiscoveryOperations().interests(
+        final DataListHolder<TargetingCriteriaDiscoveryForInterests> discoveries = twitter.targetingCriteriaDiscoveryOperations().interests(
                 new TargetingCriteriaDiscoveryForInterestsQueryBuilder());
 
         assertInterestsDiscoveries(discoveries.getList());
@@ -276,15 +281,15 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void interestsWithParams() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/interests?q=bird"))
-                
-                
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-interests-params"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/interests?q=bird"))
 
-        DataListHolder<TargetingCriteriaDiscoveryForInterests> discoveries = twitter.targetingCriteriaDiscoveryOperations().interests(
+
+                .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-interests-params"), APPLICATION_JSON));
+
+        final DataListHolder<TargetingCriteriaDiscoveryForInterests> discoveries = twitter.targetingCriteriaDiscoveryOperations().interests(
                 new TargetingCriteriaDiscoveryForInterestsQueryBuilder()
-                		.withQuery("bird"));
+                        .withQuery("bird"));
 
         assertInterestsDiscoveriesWithParams(discoveries.getList());
     }
@@ -300,11 +305,11 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void languages() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/languages"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-languages"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/languages"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-languages"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForLanguages> discoveries = twitter.targetingCriteriaDiscoveryOperations().languages(
+        final DataListHolder<TargetingCriteriaDiscoveryForLanguages> discoveries = twitter.targetingCriteriaDiscoveryOperations().languages(
                 new TargetingCriteriaDiscoveryForLanguagesQueryBuilder());
 
         assertLanguagesDiscoveries(discoveries.getList());
@@ -325,13 +330,13 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void languagesWithParams() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/languages?q=norwegian"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-languages-params"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/languages?q=norwegian"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-languages-params"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForLanguages> discoveries = twitter.targetingCriteriaDiscoveryOperations().languages(
+        final DataListHolder<TargetingCriteriaDiscoveryForLanguages> discoveries = twitter.targetingCriteriaDiscoveryOperations().languages(
                 new TargetingCriteriaDiscoveryForLanguagesQueryBuilder()
-                		.withQuery("norwegian"));
+                        .withQuery("norwegian"));
 
         assertLanguagesDiscoveriesWithParams(discoveries.getList());
     }
@@ -347,11 +352,11 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void locations() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/locations"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-locations"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/locations"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-locations"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForLocations> discoveries = twitter.targetingCriteriaDiscoveryOperations().locations(
+        final DataListHolder<TargetingCriteriaDiscoveryForLocations> discoveries = twitter.targetingCriteriaDiscoveryOperations().locations(
                 new TargetingCriteriaDiscoveryForLocationsQueryBuilder());
 
         assertLocationsDiscoveries(discoveries.getList());
@@ -374,13 +379,13 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void locationsWithParams() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/locations?q=Palo%2BAlto"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-locations-params"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/locations?q=Palo%2BAlto"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-locations-params"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForLocations> discoveries = twitter.targetingCriteriaDiscoveryOperations().locations(
+        final DataListHolder<TargetingCriteriaDiscoveryForLocations> discoveries = twitter.targetingCriteriaDiscoveryOperations().locations(
                 new TargetingCriteriaDiscoveryForLocationsQueryBuilder()
-                		.withQuery("Palo Alto"));
+                        .withQuery("Palo Alto"));
 
         assertLocationsDiscoveriesWithParams(discoveries.getList());
     }
@@ -397,12 +402,13 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void networkOperators() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/network_operators"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-network_operators"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/network_operators"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-network_operators"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForNetworkOperators> discoveries = twitter.targetingCriteriaDiscoveryOperations().networkOperators(
-                new TargetingCriteriaDiscoveryForNetworkOperatorsQueryBuilder());
+        final DataListHolder<TargetingCriteriaDiscoveryForNetworkOperators> discoveries =
+                twitter.targetingCriteriaDiscoveryOperations().networkOperators(
+                        new TargetingCriteriaDiscoveryForNetworkOperatorsQueryBuilder());
 
         assertNetworkOperatorsDiscoveries(discoveries.getList());
     }
@@ -424,14 +430,15 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void networkOperatorsWithParams() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/network_operators?country_code=US&q=Mobile"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-network_operators-params"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/network_operators?country_code=US&q=Mobile"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-network_operators-params"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForNetworkOperators> discoveries = twitter.targetingCriteriaDiscoveryOperations().networkOperators(
-                new TargetingCriteriaDiscoveryForNetworkOperatorsQueryBuilder()
-                		.withQuery("Mobile")
-                		.withCountryCode("US"));
+        final DataListHolder<TargetingCriteriaDiscoveryForNetworkOperators> discoveries =
+                twitter.targetingCriteriaDiscoveryOperations().networkOperators(
+                        new TargetingCriteriaDiscoveryForNetworkOperatorsQueryBuilder()
+                                .withQuery("Mobile")
+                                .withCountryCode("US"));
 
         assertNetworkOperatorsDiscoveriesWithParams(discoveries.getList());
     }
@@ -448,12 +455,13 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void platformVersions() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/platform_versions"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-platform_versions"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/platform_versions"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-platform_versions"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForPlatformVersions> discoveries = twitter.targetingCriteriaDiscoveryOperations().platformVersions(
-                new TargetingCriteriaDiscoveryForPlatformVersionsQueryBuilder());
+        final DataListHolder<TargetingCriteriaDiscoveryForPlatformVersions> discoveries =
+                twitter.targetingCriteriaDiscoveryOperations().platformVersions(
+                        new TargetingCriteriaDiscoveryForPlatformVersionsQueryBuilder());
 
         assertPlatformVersionsDiscoveries(discoveries.getList());
     }
@@ -477,13 +485,14 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void platformVersionsWithParams() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/platform_versions?q=cupcake"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-platform_versions-params"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/platform_versions?q=cupcake"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-platform_versions-params"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForPlatformVersions> discoveries = twitter.targetingCriteriaDiscoveryOperations().platformVersions(
-                new TargetingCriteriaDiscoveryForPlatformVersionsQueryBuilder()
-                		.withQuery("cupcake"));
+        final DataListHolder<TargetingCriteriaDiscoveryForPlatformVersions> discoveries =
+                twitter.targetingCriteriaDiscoveryOperations().platformVersions(
+                        new TargetingCriteriaDiscoveryForPlatformVersionsQueryBuilder()
+                                .withQuery("cupcake"));
 
         assertPlatformVersionsDiscoveriesWithParams(discoveries.getList());
     }
@@ -501,11 +510,11 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void platforms() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/platforms"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-platforms"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/platforms"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-platforms"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForPlatforms> discoveries = twitter.targetingCriteriaDiscoveryOperations().platforms(
+        final DataListHolder<TargetingCriteriaDiscoveryForPlatforms> discoveries = twitter.targetingCriteriaDiscoveryOperations().platforms(
                 new TargetingCriteriaDiscoveryForPlatformsQueryBuilder());
 
         assertPlatformsDiscoveries(discoveries.getList());
@@ -526,13 +535,13 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void platformsWithParams() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/platforms?q=blackberry"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-platforms-params"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/platforms?q=blackberry"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-platforms-params"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForPlatforms> discoveries = twitter.targetingCriteriaDiscoveryOperations().platforms(
+        final DataListHolder<TargetingCriteriaDiscoveryForPlatforms> discoveries = twitter.targetingCriteriaDiscoveryOperations().platforms(
                 new TargetingCriteriaDiscoveryForPlatformsQueryBuilder()
-                		.withQuery("blackberry"));
+                        .withQuery("blackberry"));
 
         assertPlatformsDiscoveriesWithParams(discoveries.getList());
     }
@@ -548,13 +557,13 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void tvShows() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/tv_shows?tv_market_locale=pt-BR"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-tv_shows"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/tv_shows?tv_market_locale=pt-BR"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-tv_shows"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForTvShow> discoveries = twitter.targetingCriteriaDiscoveryOperations().tvShow(
+        final DataListHolder<TargetingCriteriaDiscoveryForTvShow> discoveries = twitter.targetingCriteriaDiscoveryOperations().tvShow(
                 new TargetingCriteriaDiscoveryForTvShowQueryBuilder()
-                        .withLocale("pt-BR"));
+                .withLocale("pt-BR"));
 
         assertTvShowsDiscoveries(discoveries.getList());
     }
@@ -576,14 +585,14 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void tvShowsWithQuery() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/tv_shows?tv_market_locale=pt-BR&q=Glee"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-tv_shows-params"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/tv_shows?tv_market_locale=pt-BR&q=Glee"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-tv_shows-params"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForTvShow> discoveries = twitter.targetingCriteriaDiscoveryOperations().tvShow(
+        final DataListHolder<TargetingCriteriaDiscoveryForTvShow> discoveries = twitter.targetingCriteriaDiscoveryOperations().tvShow(
                 new TargetingCriteriaDiscoveryForTvShowQueryBuilder()
-                        .withLocale("pt-BR")
-                        .withQuery("Glee"));
+                .withLocale("pt-BR")
+                .withQuery("Glee"));
 
         assertTvShowsDiscoveriesWithSearch(discoveries.getList());
     }
@@ -600,11 +609,11 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void tvMarkets() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/tv_markets"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-tv_markets"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/tv_markets"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-tv_markets"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForTvMarket> discoveries = twitter.targetingCriteriaDiscoveryOperations().tvMarkets(
+        final DataListHolder<TargetingCriteriaDiscoveryForTvMarket> discoveries = twitter.targetingCriteriaDiscoveryOperations().tvMarkets(
                 new TargetingCriteriaDiscoveryForTvMarketQueryBuilder());
 
         assertTvMarketsDiscoveries(discoveries.getList());
@@ -627,11 +636,11 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void tvGenres() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/tv_genres"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-tv_genres"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/tv_genres"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-tv_genres"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForTvGenre> discoveries = twitter.targetingCriteriaDiscoveryOperations().tvGenres(
+        final DataListHolder<TargetingCriteriaDiscoveryForTvGenre> discoveries = twitter.targetingCriteriaDiscoveryOperations().tvGenres(
                 new TargetingCriteriaDiscoveryForTvGenreQueryBuilder());
 
         assertTvGenresDiscoveries(discoveries.getList());
@@ -650,11 +659,11 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     @Test
     public void tvChannels() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/tv_channels"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-targetings-tv_channels"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/tv_channels"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-tv_channels"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteriaDiscoveryForTvChannel> discoveries = twitter.targetingCriteriaDiscoveryOperations().tvChannels(
+        final DataListHolder<TargetingCriteriaDiscoveryForTvChannel> discoveries = twitter.targetingCriteriaDiscoveryOperations().tvChannels(
                 new TargetingCriteriaDiscoveryForTvChannelQueryBuilder());
 
         assertTvChannelsDiscoveries(discoveries.getList());
