@@ -1,12 +1,12 @@
 /*
  * Copyright 2014 the original author or authors.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -48,64 +48,49 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Subclass of {@link DefaultResponseErrorHandler} that handles errors from Twitter's
  * REST API, interpreting them into appropriate exceptions.
- * 
+ *
  * @author Craig Walls
  */
 public class TwitterErrorHandler extends DefaultResponseErrorHandler {
 
     @Override
     public void handleError(ClientHttpResponse response) throws IOException {
-        HttpStatus statusCode = response.getStatusCode();
-        if (statusCode.series() == Series.SERVER_ERROR) {
+        final HttpStatus statusCode = response.getStatusCode();
+        if (statusCode.series() == Series.SERVER_ERROR)
             handleServerErrors(statusCode);
-        }
-        else if (statusCode.series() == Series.CLIENT_ERROR) {
+        else if (statusCode.series() == Series.CLIENT_ERROR)
             handleClientErrors(response);
-        }
 
         // if not otherwise handled, do default handling and wrap with UncategorizedApiException
         try {
             super.handleError(response);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new UncategorizedApiException("twitter", "Error consuming Twitter REST API", e);
         }
     }
 
     private void handleClientErrors(ClientHttpResponse response) throws IOException {
-        HttpStatus statusCode = response.getStatusCode();
-        Map<String, Object> errorMap = extractErrorDetailsFromResponse(response);
+        final HttpStatus statusCode = response.getStatusCode();
+        final Map<String, Object> errorMap = extractErrorDetailsFromResponse(response);
 
-        List<String> validationErrors = new ArrayList<>();
+        final List<String> validationErrors = new ArrayList<>();
         String errorText = "";
-        if (errorMap.containsKey("error")) {
+        if (errorMap.containsKey("error"))
             errorText = (String) errorMap.get("error");
-        }
         else if (errorMap.containsKey("errors")) {
-            Object errors = errorMap.get("errors");
+
+            final Object errors = errorMap.get("errors");
             if (errors instanceof List) {
+
                 @SuppressWarnings("unchecked")
-                List<Map<String, String>> errorsList = (List<Map<String, String>>) errors;
-                for (Map<String, String> error : errorsList) {
-                    Object rawErrorCode = error.get("code");
-                    String treatedErrorCode = "";
-                    if (rawErrorCode.getClass() == Integer.class) {
-                        treatedErrorCode = ((Integer) rawErrorCode).toString();
-                    }
-                    else {
-                        treatedErrorCode = rawErrorCode.toString();
-                    }
+                final List<Map<String, String>> errorsList = (List<Map<String, String>>) errors;
 
-                    boolean isValidationError = treatedErrorCode.equals("INCLUSIVE_PARAMETERS") ||
-                            treatedErrorCode.equals("MISSING_PARAMETER") ||
-                            treatedErrorCode.equals("INVALID_PARAMETER") ||
-                            treatedErrorCode.equals("INVALID") ||
-                            treatedErrorCode.equals("INVALID_DENOMINATION") ||
-                            treatedErrorCode.equals("INVALID_TIME_WINDOW");
+                for (final Map<String, String> error : errorsList) {
+                    final String errorMessage = error.get("message");
 
-                    if (isValidationError) {
-                        validationErrors.add(error.get("message"));
-                    }
+                    if (statusCode == HttpStatus.BAD_REQUEST)
+                        validationErrors.add(errorMessage);
                     else {
                         if (errorText.length() != 0)
                             errorText += "; ";
@@ -114,82 +99,64 @@ public class TwitterErrorHandler extends DefaultResponseErrorHandler {
                     }
                 }
             }
-            else if (errors instanceof String) {
+            else if (errors instanceof String)
                 errorText = (String) errors;
-            }
         }
 
         if (statusCode == HttpStatus.BAD_REQUEST) {
-            if (errorText.contains("Rate limit exceeded.")) {
+            if (errorText.contains("Rate limit exceeded."))
                 throw new RateLimitExceededException("twitter");
-            }
 
-            if (validationErrors.size() != 0) {
+            if (validationErrors.size() != 0)
                 throw new InvalidInputDataException("twitter", validationErrors);
-            }
         }
         else if (statusCode == HttpStatus.UNAUTHORIZED) {
-            if (errorText == null) {
+            if (errorText == null)
                 throw new NotAuthorizedException("twitter", response.getStatusText());
-            }
-            else if (errorText.equals("Could not authenticate you.")) {
+            else if (errorText.equals("Could not authenticate you."))
                 throw new MissingAuthorizationException("twitter");
-            }
-            else if (errorText.equals("Could not authenticate with OAuth.")) { // revoked token
+            else if (errorText.equals("Could not authenticate with OAuth."))
                 throw new RevokedAuthorizationException("twitter");
-            }
-            else if (errorText.equals("Invalid / expired Token")) { // Note that Twitter doesn't actually expire tokens
+            else if (errorText.equals("Invalid / expired Token"))
                 throw new InvalidAuthorizationException("twitter", errorText);
-            }
-            else {
+            else
                 throw new NotAuthorizedException("twitter", errorText);
-            }
         }
         else if (statusCode == HttpStatus.FORBIDDEN) {
-            if (errorText.equals(DUPLICATE_STATUS_TEXT) || errorText.contains("You already said that")) {
+            if (errorText.equals(DUPLICATE_STATUS_TEXT) || errorText.contains("You already said that"))
                 throw new DuplicateStatusException("twitter", errorText);
-            }
-            else if (errorText.equals(STATUS_TOO_LONG_TEXT) || errorText.contains(MESSAGE_TOO_LONG_TEXT)) {
+            else if (errorText.equals(STATUS_TOO_LONG_TEXT) || errorText.contains(MESSAGE_TOO_LONG_TEXT))
                 throw new MessageTooLongException(errorText);
-            }
-            else if (errorText.equals(INVALID_MESSAGE_RECIPIENT_TEXT)) {
+            else if (errorText.equals(INVALID_MESSAGE_RECIPIENT_TEXT))
                 throw new InvalidMessageRecipientException(errorText);
-            }
-            else if (errorText.equals(DAILY_RATE_LIMIT_TEXT)) {
+            else if (errorText.equals(DAILY_RATE_LIMIT_TEXT))
                 throw new RateLimitExceededException("twitter");
-            }
-            else {
+            else
                 throw new OperationNotPermittedException("twitter", errorText);
-            }
         }
-        else if (statusCode == HttpStatus.NOT_FOUND) {
+        else if (statusCode == HttpStatus.NOT_FOUND)
             throw new ResourceNotFoundException("twitter", errorText);
-        }
-        else if (statusCode == HttpStatus.valueOf(ENHANCE_YOUR_CALM) || statusCode == HttpStatus.valueOf(TOO_MANY_REQUESTS)) {
+        else if (statusCode == HttpStatus.valueOf(ENHANCE_YOUR_CALM) || statusCode == HttpStatus.valueOf(TOO_MANY_REQUESTS))
             throw new RateLimitExceededException("twitter");
-        }
 
     }
 
     private void handleServerErrors(HttpStatus statusCode) throws IOException {
-        if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR) {
+        if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR)
             throw new InternalServerErrorException("twitter",
                     "Something is broken at Twitter. Please see http://dev.twitter.com/pages/support to report the issue.");
-        }
-        else if (statusCode == HttpStatus.BAD_GATEWAY) {
+        else if (statusCode == HttpStatus.BAD_GATEWAY)
             throw new ServerDownException("twitter", "Twitter is down or is being upgraded.");
-        }
-        else if (statusCode == HttpStatus.SERVICE_UNAVAILABLE) {
+        else if (statusCode == HttpStatus.SERVICE_UNAVAILABLE)
             throw new ServerOverloadedException("twitter", "Twitter is overloaded with requests. Try again later.");
-        }
     }
 
     private Map<String, Object> extractErrorDetailsFromResponse(ClientHttpResponse response) throws IOException {
-        ObjectMapper mapper = new ObjectMapper(new JsonFactory());
+        final ObjectMapper mapper = new ObjectMapper(new JsonFactory());
         try {
             return mapper.<Map<String, Object>>readValue(response.getBody(), new TypeReference<Map<String, Object>>() {});
         }
-        catch (JsonParseException e) {
+        catch (final JsonParseException e) {
             return Collections.emptyMap();
         }
     }
