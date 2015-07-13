@@ -24,13 +24,14 @@ import org.springframework.social.twitter.api.advertising.FundingInstrument;
 import org.springframework.social.twitter.api.advertising.FundingInstrumentQuery;
 import org.springframework.social.twitter.api.impl.AbstractTwitterOperations;
 import org.springframework.social.twitter.api.impl.DataListHolder;
+import org.springframework.social.twitter.api.impl.DataSingleHolder;
 import org.springframework.social.twitter.api.impl.TwitterApiBuilderForUri;
 import org.springframework.social.twitter.api.impl.TwitterApiUriResourceForAdvertising;
 import org.springframework.web.client.RestTemplate;
 
 /**
  * Implementation of {@link AdvertisingOperations}, providing a binding to Twitter's direct message-oriented REST resources.
- * 
+ *
  * @author Hudson Mendes
  */
 public class AdvertisingTemplate extends AbstractTwitterOperations implements AdvertisingOperations {
@@ -53,6 +54,20 @@ public class AdvertisingTemplate extends AbstractTwitterOperations implements Ad
                 null,
                 new ParameterizedTypeReference<DataListHolder<AdvertisingAccount>>() {}
                 ).getBody();
+    }
+
+    @Override
+    public AdvertisingAccount getAccount(String id) {
+        requireUserAuthorization();
+        return restTemplate.exchange(
+                new TwitterApiBuilderForUri()
+                        .withResource(TwitterApiUriResourceForAdvertising.ACCOUNT)
+                        .withArgument("account_id", id)
+                        .build(),
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<DataSingleHolder<AdvertisingAccount>>() {}
+                ).getBody().getData();
     }
 
     @Override

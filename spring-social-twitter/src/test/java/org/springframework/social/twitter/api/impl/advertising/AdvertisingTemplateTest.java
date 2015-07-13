@@ -1,12 +1,12 @@
 /*
  * Copyright 2014 the original author or authors.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,6 +31,7 @@ import java.time.Month;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.social.twitter.api.advertising.AdvertisingAccount;
 import org.springframework.social.twitter.api.advertising.AdvertisingAccountSorting;
@@ -48,37 +49,61 @@ public class AdvertisingTemplateTest extends AbstractTwitterApiTest {
     @Test
     public void getAccounts() {
         mockServer
-                .expect(requestTo("https://ads-api.twitter.com/0/accounts?with_deleted=true&sort=updated_at"))
-                .andExpect(method(GET))
-                .andRespond(withSuccess(jsonResource("ad-accounts"), APPLICATION_JSON));
+        .expect(requestTo("https://ads-api.twitter.com/0/accounts?with_deleted=true&sort=updated_at"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-accounts"), APPLICATION_JSON));
 
 
-        DataListHolder<AdvertisingAccount> accounts = twitter.advertisingOperations().getAccounts(
+        final DataListHolder<AdvertisingAccount> accounts = twitter.advertisingOperations().getAccounts(
                 new AdvertisingAccountQueryBuilder()
-                        .includeDeleted(true)
-                        .sortBy(AdvertisingAccountSorting.updated_at));
+                .includeDeleted(true)
+                .sortBy(AdvertisingAccountSorting.updated_at));
 
         assertAdvertisingAccountContents(accounts.getList());
     }
 
     @Test
-    public void getFundingInstruments() throws UnsupportedEncodingException {
-        String mockedAccountId = "hkk5";
-        String mockedFundingInstrumentId1 = "h2459";
-        String mockedFundingInstrumentId2 = "95jll";
+    public void getAccount() {
+        final String mockedAccountId = "gq0vqj";
         mockServer
-                .expect(requestTo(
-                        "https://ads-api.twitter.com/0/accounts/" + mockedAccountId + "/funding_instruments" +
-                                "?funding_instrument_ids=" + URLEncoder.encode(mockedFundingInstrumentId1 + "," + mockedFundingInstrumentId2, UTF8) +
-                                "&with_deleted=false"))
+        .expect(requestTo("https://ads-api.twitter.com/0/accounts/" + mockedAccountId))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-accounts-single"), APPLICATION_JSON));
+
+
+        final AdvertisingAccount account = twitter.advertisingOperations().getAccount(mockedAccountId);
+
+        assertAdvertisingAccountSingleContents(account);
+    }
+
+    private void assertAdvertisingAccountSingleContents(AdvertisingAccount account) {
+        Assert.assertNotNull(account);
+        Assert.assertEquals("gq0vqj", account.getId());
+        Assert.assertEquals("Account for the user @unkown", account.getName());
+        Assert.assertEquals("abababababababababababababababab", account.getSalt());
+        Assert.assertEquals(TimeZone.getTimeZone("America/Los_Angeles"), account.getTimeZone());
+        Assert.assertEquals("2015-04-13T20:42:39", account.getCreatedAt().toString());
+        Assert.assertEquals("2015-07-13T20:17:34", account.getUpdatedAt().toString());
+    }
+
+    @Test
+    public void getFundingInstruments() throws UnsupportedEncodingException {
+        final String mockedAccountId = "hkk5";
+        final String mockedFundingInstrumentId1 = "h2459";
+        final String mockedFundingInstrumentId2 = "95jll";
+        mockServer
+        .expect(requestTo(
+                "https://ads-api.twitter.com/0/accounts/" + mockedAccountId + "/funding_instruments" +
+                        "?funding_instrument_ids=" + URLEncoder.encode(mockedFundingInstrumentId1 + "," + mockedFundingInstrumentId2, UTF8) +
+                "&with_deleted=false"))
                 .andExpect(method(GET))
                 .andRespond(withSuccess(jsonResource("ad-funding-instruments"), APPLICATION_JSON));
 
-        DataListHolder<FundingInstrument> fundingInstruments = twitter.advertisingOperations().getFundingInstruments(
+        final DataListHolder<FundingInstrument> fundingInstruments = twitter.advertisingOperations().getFundingInstruments(
                 mockedAccountId,
                 new FundingInstrumentQueryBuilder()
-                        .withFundingInstruments(mockedFundingInstrumentId1, mockedFundingInstrumentId2)
-                        .includeDeleted(false));
+                .withFundingInstruments(mockedFundingInstrumentId1, mockedFundingInstrumentId2)
+                .includeDeleted(false));
 
         assertFundingInstrumentContents(fundingInstruments.getList());
     }

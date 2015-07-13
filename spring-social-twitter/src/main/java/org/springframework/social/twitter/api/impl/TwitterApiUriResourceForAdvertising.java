@@ -2,6 +2,7 @@ package org.springframework.social.twitter.api.impl;
 
 public enum TwitterApiUriResourceForAdvertising {
     ACCOUNTS("accounts"),
+    ACCOUNT("accounts/:account_id"),
 
     CAMPAIGNS("accounts/:account_id/campaigns"),
     CAMPAIGN("accounts/:account_id/campaigns/:campaign_id"),
@@ -60,10 +61,10 @@ public enum TwitterApiUriResourceForAdvertising {
     private final String name;
 
     TwitterApiUriResourceForAdvertising(String path) {
-        this.name = path;
+        name = path;
     }
 
     public String getPath() {
-        return this.name;
+        return name;
     }
 }
