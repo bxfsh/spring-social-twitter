@@ -1,12 +1,12 @@
 /*
  * Copyright 2014 the original author or authors.
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -50,15 +50,15 @@ public class AdvertisingTemplateTest extends AbstractTwitterApiTest {
     @Test
     public void getAccounts() {
         mockServer
-        .expect(requestTo("https://ads-api.twitter.com/0/accounts?with_deleted=true&sort_by=updated_at&sort_direction=desc"))
-        .andExpect(method(GET))
-        .andRespond(withSuccess(jsonResource("ad-accounts"), APPLICATION_JSON));
+                .expect(requestTo("https://ads-api.twitter.com/0/accounts?with_deleted=true&sort_by=updated_at-desc"))
+                .andExpect(method(GET))
+                .andRespond(withSuccess(jsonResource("ad-accounts"), APPLICATION_JSON));
 
 
         final DataListHolder<AdvertisingAccount> accounts = twitter.advertisingOperations().getAccounts(
                 new AdvertisingAccountQueryBuilder()
-                .includeDeleted(true)
-                .sortBy(AdvertisingAccountSorting.updated_at, SortDirection.desc));
+                        .includeDeleted(true)
+                        .sortBy(AdvertisingAccountSorting.updated_at, SortDirection.desc));
 
         assertAdvertisingAccountContents(accounts.getList());
     }
@@ -67,9 +67,9 @@ public class AdvertisingTemplateTest extends AbstractTwitterApiTest {
     public void getAccount() {
         final String mockedAccountId = "gq0vqj";
         mockServer
-        .expect(requestTo("https://ads-api.twitter.com/0/accounts/" + mockedAccountId))
-        .andExpect(method(GET))
-        .andRespond(withSuccess(jsonResource("ad-accounts-single"), APPLICATION_JSON));
+                .expect(requestTo("https://ads-api.twitter.com/0/accounts/" + mockedAccountId))
+                .andExpect(method(GET))
+                .andRespond(withSuccess(jsonResource("ad-accounts-single"), APPLICATION_JSON));
 
 
         final AdvertisingAccount account = twitter.advertisingOperations().getAccount(mockedAccountId);
@@ -93,18 +93,18 @@ public class AdvertisingTemplateTest extends AbstractTwitterApiTest {
         final String mockedFundingInstrumentId1 = "h2459";
         final String mockedFundingInstrumentId2 = "95jll";
         mockServer
-        .expect(requestTo(
-                "https://ads-api.twitter.com/0/accounts/" + mockedAccountId + "/funding_instruments" +
-                        "?funding_instrument_ids=" + URLEncoder.encode(mockedFundingInstrumentId1 + "," + mockedFundingInstrumentId2, UTF8) +
-                "&with_deleted=false"))
+                .expect(requestTo(
+                        "https://ads-api.twitter.com/0/accounts/" + mockedAccountId + "/funding_instruments" +
+                                "?funding_instrument_ids=" + URLEncoder.encode(mockedFundingInstrumentId1 + "," + mockedFundingInstrumentId2, UTF8) +
+                                "&with_deleted=false"))
                 .andExpect(method(GET))
                 .andRespond(withSuccess(jsonResource("ad-funding-instruments"), APPLICATION_JSON));
 
         final DataListHolder<FundingInstrument> fundingInstruments = twitter.advertisingOperations().getFundingInstruments(
                 mockedAccountId,
                 new FundingInstrumentQueryBuilder()
-                .withFundingInstruments(mockedFundingInstrumentId1, mockedFundingInstrumentId2)
-                .includeDeleted(false));
+                        .withFundingInstruments(mockedFundingInstrumentId1, mockedFundingInstrumentId2)
+                        .includeDeleted(false));
 
         assertFundingInstrumentContents(fundingInstruments.getList());
     }
