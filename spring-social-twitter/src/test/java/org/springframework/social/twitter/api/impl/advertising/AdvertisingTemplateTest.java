@@ -38,6 +38,7 @@ import org.springframework.social.twitter.api.advertising.AdvertisingAccountSort
 import org.springframework.social.twitter.api.advertising.ApprovalStatus;
 import org.springframework.social.twitter.api.advertising.FundingInstrument;
 import org.springframework.social.twitter.api.advertising.FundingInstrumentType;
+import org.springframework.social.twitter.api.advertising.SortDirection;
 import org.springframework.social.twitter.api.impl.AbstractTwitterApiTest;
 import org.springframework.social.twitter.api.impl.DataListHolder;
 
@@ -49,7 +50,7 @@ public class AdvertisingTemplateTest extends AbstractTwitterApiTest {
     @Test
     public void getAccounts() {
         mockServer
-        .expect(requestTo("https://ads-api.twitter.com/0/accounts?with_deleted=true&sort=updated_at"))
+        .expect(requestTo("https://ads-api.twitter.com/0/accounts?with_deleted=true&sort_by=updated_at&sort_direction=desc"))
         .andExpect(method(GET))
         .andRespond(withSuccess(jsonResource("ad-accounts"), APPLICATION_JSON));
 
@@ -57,7 +58,7 @@ public class AdvertisingTemplateTest extends AbstractTwitterApiTest {
         final DataListHolder<AdvertisingAccount> accounts = twitter.advertisingOperations().getAccounts(
                 new AdvertisingAccountQueryBuilder()
                 .includeDeleted(true)
-                .sortBy(AdvertisingAccountSorting.updated_at));
+                .sortBy(AdvertisingAccountSorting.updated_at, SortDirection.desc));
 
         assertAdvertisingAccountContents(accounts.getList());
     }
