@@ -24,19 +24,19 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class TargetingCriteriaDiscoveryForLocations extends TwitterObject {
-    private final String name;
     private final String locationType;
+    private final String name;
     private final String targetingType;
     private final String targetingValue;
 
     public TargetingCriteriaDiscoveryForLocations(
-    		String name,
     		String locationType,
+    		String name,
     	    String targetingType,
     	    String targetingValue) {
 
-        this.name = name;
         this.locationType = locationType;
+        this.name = name;
         this.targetingType = targetingType;
         this.targetingValue = targetingValue;
     }

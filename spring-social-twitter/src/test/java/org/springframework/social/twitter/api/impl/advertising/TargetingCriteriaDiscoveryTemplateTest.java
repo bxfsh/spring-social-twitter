@@ -365,13 +365,13 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     private void assertLocationsDiscoveries(List<TargetingCriteriaDiscoveryForLocations> actual) {
         Assert.assertEquals(200, actual.size());
 
-        Assert.assertEquals("POSTAL_CODE", actual.get(2).getName());
-        Assert.assertEquals("00603, PR, US", actual.get(2).getLocationType());
+        Assert.assertEquals("00603, PR, US", actual.get(2).getName());
+        Assert.assertEquals("POSTAL_CODE", actual.get(2).getLocationType());
         Assert.assertEquals("LOCATION", actual.get(2).getTargetingType());
         Assert.assertEquals("84e681a9fb76656f", actual.get(2).getTargetingValue());
 
-        Assert.assertEquals("POSTAL_CODE", actual.get(145).getName());
-        Assert.assertEquals("01012, BR", actual.get(145).getLocationType());
+        Assert.assertEquals("01012, BR", actual.get(145).getName());
+        Assert.assertEquals("POSTAL_CODE", actual.get(145).getLocationType());
         Assert.assertEquals("LOCATION", actual.get(145).getTargetingType());
         Assert.assertEquals("2bb6204f6b9fcfb7", actual.get(145).getTargetingValue());
     }
@@ -393,8 +393,8 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     private void assertLocationsDiscoveriesWithParams(List<TargetingCriteriaDiscoveryForLocations> actual) {
         Assert.assertEquals(8, actual.size());
 
-        Assert.assertEquals("POSTAL_CODE", actual.get(6).getName());
-        Assert.assertEquals("94301, CA, USA", actual.get(6).getLocationType());
+        Assert.assertEquals("94301, CA, USA", actual.get(6).getName());
+        Assert.assertEquals("POSTAL_CODE", actual.get(6).getLocationType());
         Assert.assertEquals("LOCATION", actual.get(6).getTargetingType());
         Assert.assertEquals("205edf12aa812e1c", actual.get(6).getTargetingValue());
     }
