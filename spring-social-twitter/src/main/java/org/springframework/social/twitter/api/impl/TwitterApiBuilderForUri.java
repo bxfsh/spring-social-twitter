@@ -68,7 +68,9 @@ public class TwitterApiBuilderForUri {
 	}
 
     public TwitterApiBuilderForUri withArgument(String argument, Object value) {
-        this.parameters.add(argument, value.toString());
+        if(null!=value) {
+        	this.parameters.add(argument, value.toString());
+        }
         return this;
     }
 
