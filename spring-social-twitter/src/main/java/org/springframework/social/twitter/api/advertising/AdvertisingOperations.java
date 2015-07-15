@@ -61,7 +61,7 @@ public interface AdvertisingOperations {
      * Retrieves a list of all {@link FeatureKey} linked to a particular {@link AdvertisingAccount}.
      *
      * @param accountId identifies the account for which we want to get the feature keys.
-     * @param featureKey The particular feature key to check.
+     * @param query The query parameters that will filter the request
      * @return a list of {@link FeatureKey}
      * @throws ApiException if there is an error while communicating with Twitter.
      * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.

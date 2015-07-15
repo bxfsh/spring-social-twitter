@@ -21,24 +21,25 @@ import org.springframework.util.MultiValueMap;
 
 /**
  * Facilitates the creation of the query that will be
- * used to filter results from the {@link AdvertisingAccountFeature} endpoint.
- * 
+ * used to filter results from the feature endpoint.
+ *
  * @author Hudson Mendes
  */
 public class AdvertisingAccountFeatureQueryBuilder
         extends AbstractTwitterQueryForEntityBuilder<AdvertisingAccountFeatureQuery>
         implements AdvertisingAccountFeatureQuery {
-	private FeatureKey featureKey;
 
-	@Override
-	public AdvertisingAccountFeatureQuery withFeatureKey(FeatureKey featureKey) {
-		this.featureKey = featureKey;
-		return this;
-	}
+    private FeatureKey featureKey;
 
-	@Override
+    @Override
+    public AdvertisingAccountFeatureQuery withFeatureKey(FeatureKey featureKey) {
+        this.featureKey = featureKey;
+        return this;
+    }
+
+    @Override
     protected void makeParameters(MultiValueMap<String, String> map) {
-        appendParameter(map, "feature_keys", this.featureKey);
-	}
+        appendParameter(map, "feature_keys", featureKey);
+    }
 
 }
