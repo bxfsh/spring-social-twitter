@@ -71,6 +71,13 @@ public enum StatisticsMetric {
             Integer.class,
             "Count of conversions of type SITE_VISIT"),
 
+    promotion_card_responses(
+            StatisticsMetricFamily.ENGAGEMENT,
+            null,
+            true,
+            Integer.class,
+            "Card engagements"),
+            
     promoted_account_follows(
             StatisticsMetricFamily.ENGAGEMENT,
             null,
