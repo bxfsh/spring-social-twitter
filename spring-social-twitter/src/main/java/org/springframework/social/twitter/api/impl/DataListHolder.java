@@ -19,8 +19,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.social.twitter.api.TwitterObject;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -39,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Hudson Mendes
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DataListHolder<TEntity extends TwitterObject> implements Serializable {
+public class DataListHolder<TEntity> implements Serializable {
 	private static final long serialVersionUID = 1L;
     private final List<TEntity> list;
     private final String dataType;

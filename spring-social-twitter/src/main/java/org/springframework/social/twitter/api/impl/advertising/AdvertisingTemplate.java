@@ -18,6 +18,7 @@ package org.springframework.social.twitter.api.impl.advertising;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.social.twitter.api.advertising.AdvertisingAccount;
+import org.springframework.social.twitter.api.advertising.AdvertisingAccountFeatureQuery;
 import org.springframework.social.twitter.api.advertising.AdvertisingAccountQuery;
 import org.springframework.social.twitter.api.advertising.AdvertisingOperations;
 import org.springframework.social.twitter.api.advertising.FundingInstrument;
@@ -68,6 +69,21 @@ public class AdvertisingTemplate extends AbstractTwitterOperations implements Ad
                 null,
                 new ParameterizedTypeReference<DataSingleHolder<AdvertisingAccount>>() {}
                 ).getBody().getData();
+    }
+
+    @Override
+    public DataListHolder<String> getAccountFeatures(String accountId, AdvertisingAccountFeatureQuery query) {
+        requireUserAuthorization();
+        return restTemplate.exchange(
+                new TwitterApiBuilderForUri()
+                        .withResource(TwitterApiUriResourceForAdvertising.ACCOUNT_FEATURES)
+                        .withArgument("account_id", accountId)
+                        .withArgument(query.toQueryParameters())
+                        .build(),
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<DataListHolder<String>>() {}
+                ).getBody();
     }
 
     @Override

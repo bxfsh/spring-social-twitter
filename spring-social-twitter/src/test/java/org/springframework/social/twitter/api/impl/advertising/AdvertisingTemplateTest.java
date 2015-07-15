@@ -88,6 +88,26 @@ public class AdvertisingTemplateTest extends AbstractTwitterApiTest {
     }
 
     @Test
+    public void getAccountFeatures() {
+        final String mockedAccountId = "gq0vqj";
+        mockServer
+                .expect(requestTo("https://ads-api.twitter.com/0/accounts/" + mockedAccountId + "/features"))
+                .andExpect(method(GET))
+                .andRespond(withSuccess(jsonResource("ad-accounts-features"), APPLICATION_JSON));
+
+
+        final DataListHolder<String> features = twitter.advertisingOperations().getAccountFeatures(
+        		mockedAccountId,
+        		new AdvertisingAccountFeatureQueryBuilder());
+
+        assertAdvertisingAccountFeatureContents(features.getList());
+    }
+
+    private void assertAdvertisingAccountFeatureContents(List<String> features) {
+        Assert.assertNotNull(features);
+    }
+
+    @Test
     public void getFundingInstruments() throws UnsupportedEncodingException {
         final String mockedAccountId = "hkk5";
         final String mockedFundingInstrumentId1 = "h2459";

@@ -57,4 +57,15 @@ public interface AdvertisingOperations {
      */
     DataListHolder<FundingInstrument> getFundingInstruments(String accountId, FundingInstrumentQuery query);
 
+    /**
+     * Retrieves a list of all {@link FeatureKey} linked to a particular {@link AdvertisingAccount}.
+     *
+     * @param accountId identifies the account for which we want to get the feature keys.
+     * @param featureKey The particular feature key to check.
+     * @return a list of {@link FeatureKey}
+     * @throws ApiException if there is an error while communicating with Twitter.
+     * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
+     */
+    DataListHolder<String> getAccountFeatures(String accountId, AdvertisingAccountFeatureQuery query);
+
 }
