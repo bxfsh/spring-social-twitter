@@ -105,6 +105,10 @@ public class AdvertisingTemplateTest extends AbstractTwitterApiTest {
 
     private void assertAdvertisingAccountFeatureContents(List<String> features) {
         Assert.assertNotNull(features);
+        assertEquals(2, features.size());
+
+        assertEquals("MOBILE_CONVERSION_TRANSACTION_VALUE", features.get(0));
+        assertEquals("INSTALLED_APP_CATEGORY_TARGETING", features.get(1));
     }
 
     @Test
