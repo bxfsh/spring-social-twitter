@@ -11,7 +11,7 @@ public class TargetingCriteriaDiscoveryForBehaviorsQueryBuilder
 extends AbstractTwitterQueryForEntityBuilder<TargetingCriteriaDiscoveryForBehaviorsQuery>
 implements TargetingCriteriaDiscoveryForBehaviorsQuery {
 
-    private final List<String> behaviorIds = new ArrayList<>();
+    private final List<String> behaviorIds = new ArrayList<String>();
     private String condition;
 
     @Override

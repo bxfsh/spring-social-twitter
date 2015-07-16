@@ -36,6 +36,7 @@ import org.junit.Test;
 import org.springframework.social.twitter.api.advertising.AdvertisingAccount;
 import org.springframework.social.twitter.api.advertising.AdvertisingAccountSorting;
 import org.springframework.social.twitter.api.advertising.ApprovalStatus;
+import org.springframework.social.twitter.api.advertising.FeatureKey;
 import org.springframework.social.twitter.api.advertising.FundingInstrument;
 import org.springframework.social.twitter.api.advertising.FundingInstrumentType;
 import org.springframework.social.twitter.api.advertising.SortDirection;
@@ -99,6 +100,23 @@ public class AdvertisingTemplateTest extends AbstractTwitterApiTest {
         final DataListHolder<String> features = twitter.advertisingOperations().getAccountFeatures(
         		mockedAccountId,
         		new AdvertisingAccountFeatureQueryBuilder());
+
+        assertAdvertisingAccountFeatureContents(features.getList());
+    }
+
+    @Test
+    public void getAccountFeaturesWithParams() {
+        final String mockedAccountId = "gq0vqj";
+        mockServer
+                .expect(requestTo("https://ads-api.twitter.com/0/accounts/" + mockedAccountId + "/features?feature_keys=MOBILE_CONVERSION_TRANSACTION_VALUE%2CVIDEO_VIEWS_OBJECTIVE"))
+                .andExpect(method(GET))
+                .andRespond(withSuccess(jsonResource("ad-accounts-features"), APPLICATION_JSON));
+
+
+        final DataListHolder<String> features = twitter.advertisingOperations().getAccountFeatures(
+        		mockedAccountId,
+        		new AdvertisingAccountFeatureQueryBuilder()
+        		.withFeatureKey(FeatureKey.MOBILE_CONVERSION_TRANSACTION_VALUE, FeatureKey.VIDEO_VIEWS_OBJECTIVE));
 
         assertAdvertisingAccountFeatureContents(features.getList());
     }

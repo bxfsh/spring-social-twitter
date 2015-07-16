@@ -15,6 +15,9 @@
  */
 package org.springframework.social.twitter.api.impl.advertising;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.social.twitter.api.advertising.AdvertisingAccountFeatureQuery;
 import org.springframework.social.twitter.api.advertising.FeatureKey;
 import org.springframework.util.MultiValueMap;
@@ -29,17 +32,21 @@ public class AdvertisingAccountFeatureQueryBuilder
         extends AbstractTwitterQueryForEntityBuilder<AdvertisingAccountFeatureQuery>
         implements AdvertisingAccountFeatureQuery {
 
-    private FeatureKey featureKey;
+    private List<FeatureKey> featureKeys = new ArrayList<FeatureKey>();
 
     @Override
-    public AdvertisingAccountFeatureQuery withFeatureKey(FeatureKey featureKey) {
-        this.featureKey = featureKey;
+    public AdvertisingAccountFeatureQuery withFeatureKey(FeatureKey... featureKeys) {
+        if(null!=featureKeys) {
+            for(final FeatureKey featureKey: featureKeys) {
+                this.featureKeys.add(featureKey);
+            }
+        }
         return this;
     }
 
     @Override
     protected void makeParameters(MultiValueMap<String, String> map) {
-        appendParameter(map, "feature_keys", featureKey);
+        appendParameter(map, "feature_keys", featureKeys);
     }
 
 }

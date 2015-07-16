@@ -23,5 +23,5 @@ import org.springframework.social.twitter.api.TwitterQueryForEntity;
  * @author Hudson Mendes
  */
 public interface AdvertisingAccountFeatureQuery extends TwitterQueryForEntity<AdvertisingAccountFeatureQuery> {
-    public AdvertisingAccountFeatureQuery withFeatureKey(FeatureKey featureKey);
+    public AdvertisingAccountFeatureQuery withFeatureKey(FeatureKey... featureKeys);
 }
