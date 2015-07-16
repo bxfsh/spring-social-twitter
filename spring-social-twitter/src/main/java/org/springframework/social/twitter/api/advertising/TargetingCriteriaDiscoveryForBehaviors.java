@@ -21,7 +21,7 @@ import org.springframework.social.twitter.api.TwitterObject;
 
 
 /**
- * Data discovery for targeting criterias based in devices.
+ * Data discovery for targeting criterias based on behaviors.
  * 
  * @author Hudson Mendes
  */

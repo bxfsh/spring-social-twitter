@@ -25,6 +25,8 @@ import org.springframework.social.twitter.api.advertising.TargetingCriteriaDisco
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForBehaviorsQuery;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForDevices;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForDevicesQuery;
+import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForEvents;
+import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForEventsQuery;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForInterests;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForInterestsQuery;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForLanguages;
@@ -113,6 +115,20 @@ public class TargetingCriteriaDiscoveryTemplate extends AbstractTwitterOperation
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<DataListHolder<TargetingCriteriaDiscoveryForDevices>>() {}
+                ).getBody();
+    }
+
+    @Override
+    public DataListHolder<TargetingCriteriaDiscoveryForEvents> events(TargetingCriteriaDiscoveryForEventsQuery query) {
+        requireUserAuthorization();
+        return restTemplate.exchange(
+                new TwitterApiBuilderForUri()
+                        .withResource(TwitterApiUriResourceForAdvertising.TARGETINGS_DISCOVERY_EVENTS)
+                        .withArgument(query.toQueryParameters())
+                        .build(),
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<DataListHolder<TargetingCriteriaDiscoveryForEvents>>() {}
                 ).getBody();
     }
 

@@ -30,6 +30,7 @@ public enum TwitterApiUriResourceForAdvertising {
     TARGETINGS_DISCOVERY_BEHAVIOR_TAXONOMIES("targeting_criteria/behavior_taxonomies"),
     TARGETINGS_DISCOVERY_BEHAVIORS("targeting_criteria/behaviors"),
     TARGETINGS_DISCOVERY_DEVICES("targeting_criteria/devices"),
+    TARGETINGS_DISCOVERY_EVENTS("targeting_criteria/events"),
     TARGETINGS_DISCOVERY_INTERESTS("targeting_criteria/interests"),
     TARGETINGS_DISCOVERY_LANGUAGES("targeting_criteria/languages"),
     TARGETINGS_DISCOVERY_LOCATIONS("targeting_criteria/locations"),

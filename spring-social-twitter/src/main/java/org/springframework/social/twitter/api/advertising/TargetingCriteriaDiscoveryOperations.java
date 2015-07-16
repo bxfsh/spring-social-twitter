@@ -37,6 +37,12 @@ public interface TargetingCriteriaDiscoveryOperations {
     DataListHolder<TargetingCriteriaDiscoveryForDevices> devices(TargetingCriteriaDiscoveryForDevicesQuery query);
 
     /**
+     * @param query builds the query for querying of {@link TargetingCriteriaDiscoveryForEvents}
+     * @return an instance of {@link TargetingCriteriaDiscoveryForEvents}
+     */
+    DataListHolder<TargetingCriteriaDiscoveryForEvents> events(TargetingCriteriaDiscoveryForEventsQuery query);
+
+    /**
      * @param query builds the query for querying of {@link TargetingCriteriaDiscoveryForBehaviorTaxonomiesQuery}
      * @return an instance of {@link TargetingCriteriaDiscoveryForBehaviorTaxonomies}
      */

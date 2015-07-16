@@ -254,6 +254,47 @@ public class TargetingCriteriaDiscoveryTemplateTest extends AbstractTwitterApiTe
     }
 
     @Test
+    public void events() {
+        mockServer
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/events"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-events"), APPLICATION_JSON));
+
+        final DataListHolder<TargetingCriteriaDiscoveryForEvents> discoveries = twitter.targetingCriteriaDiscoveryOperations().events(
+                new TargetingCriteriaDiscoveryForEventsQueryBuilder());
+
+        assertEventsDiscoveries(discoveries.getList());
+    }
+
+    private void assertEventsDiscoveries(List<TargetingCriteriaDiscoveryForEvents> actual) {
+        Assert.assertEquals(132, actual.size());
+
+        Assert.assertEquals("HTC Butterfly", actual.get(12).getName());
+        Assert.assertEquals("iPad 4", actual.get(35).getName());
+    }
+
+    @Test
+    public void eventsWithParams() {
+        mockServer
+        .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/events?q=apple"))
+        .andExpect(method(GET))
+        .andRespond(withSuccess(jsonResource("ad-targetings-events-params"), APPLICATION_JSON));
+
+        final DataListHolder<TargetingCriteriaDiscoveryForEvents> discoveries = twitter.targetingCriteriaDiscoveryOperations().events(
+                new TargetingCriteriaDiscoveryForEventsQueryBuilder()
+                        .withQuery("apple"));
+
+        assertEventsDiscoveriesWithParams(discoveries.getList());
+    }
+
+    private void assertEventsDiscoveriesWithParams(List<TargetingCriteriaDiscoveryForEvents> actual) {
+        Assert.assertEquals(8, actual.size());
+
+        Assert.assertEquals("iPhone 4", actual.get(1).getName());
+        Assert.assertEquals("iPhone 4S", actual.get(2).getName());
+    }
+
+    @Test
     public void interests() {
         mockServer
         .expect(requestTo("https://ads-api.twitter.com/0/targeting_criteria/interests"))
