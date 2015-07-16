@@ -48,6 +48,7 @@ import org.springframework.social.twitter.api.advertising.TargetingCriteriaDisco
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForBehaviorTaxonomies;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForBehaviors;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForDevices;
+import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForEvents;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForInterests;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForLanguages;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForLocations;
@@ -73,6 +74,7 @@ import org.springframework.social.twitter.api.impl.advertising.TargetingCriteria
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryForBehaviorTaxonomiesMixin;
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryForBehaviorsMixin;
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryForDevicesMixin;
+import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryForEventsMixin;
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryForInterestsMixin;
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryForLanguagesMixin;
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryForLocationsMixin;
@@ -133,6 +135,7 @@ public class TwitterModule extends SimpleModule {
         context.setMixInAnnotations(TargetingCriteriaDiscoveryForBehaviorTaxonomies.class, TargetingCriteriaDiscoveryForBehaviorTaxonomiesMixin.class);
         context.setMixInAnnotations(TargetingCriteriaDiscoveryForBehaviors.class, TargetingCriteriaDiscoveryForBehaviorsMixin.class);
         context.setMixInAnnotations(TargetingCriteriaDiscoveryForDevices.class, TargetingCriteriaDiscoveryForDevicesMixin.class);
+        context.setMixInAnnotations(TargetingCriteriaDiscoveryForEvents.class, TargetingCriteriaDiscoveryForEventsMixin.class);
         context.setMixInAnnotations(TargetingCriteriaDiscoveryForInterests.class, TargetingCriteriaDiscoveryForInterestsMixin.class);
         context.setMixInAnnotations(TargetingCriteriaDiscoveryForLanguages.class, TargetingCriteriaDiscoveryForLanguagesMixin.class);
         context.setMixInAnnotations(TargetingCriteriaDiscoveryForLocations.class, TargetingCriteriaDiscoveryForLocationsMixin.class);

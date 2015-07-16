@@ -15,7 +15,6 @@
  */
 package org.springframework.social.twitter.api.advertising;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,37 +29,108 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class TargetingCriteriaDiscoveryForEvents extends TwitterObject {
-    private final Map<String, Long> reach = new HashMap<String, Long>();
-    private final String name;
-    private final LocalDateTime startTime;
-    private final List<String> topUsers = new ArrayList<String>();
-    private final List<String> topHashTags = new ArrayList<String>();
+    private final Map<String, Float> countryBreakdownPercentage = new HashMap<String, Float>();
+    private final String countryCode;
+    private final Map<String, Float> deviceBreakdownPercentage = new HashMap<String, Float>();
+    private final String endTime;
+    private final EventType eventType;
     private final Map<String, Float> genderBreakdownPercentage = new HashMap<String, Float>();
-
-    private final List<String> countryCodes;
-    private final LocalDateTime endTime;
+    private final String id;
+    private final boolean isGlobal;
+	private final String name;
+    private final Map<String, Long> reach = new HashMap<String, Long>();
+    private final String startTime;
+    private final List<String> topHashTags = new ArrayList<String>();
+    private final List<Long> topTweets = new ArrayList<Long>();
+    private final List<String> topUsers = new ArrayList<String>();
     
     public TargetingCriteriaDiscoveryForEvents(
-    		final Map<String, Long> reach,
-    	    final String name,
-    	    final LocalDateTime startTime,
-    	    final List<String> topUsers,
-    	    final List<String> topHashTags,
+    	    final Map<String, Float> countryBreakdownPercentage,
+    	    final String countryCode,
+    	    final Map<String, Float> deviceBreakdownPercentage,
+    	    final String endTime,
+    	    final EventType eventType,
     	    final Map<String, Float> genderBreakdownPercentage,
-    	    
-    	    final List<String> countryCodes,
-    	    final LocalDateTime endTime) {
+    	    final String id,
+    	    final boolean isGlobal,
+    	    final String name,
+    		final Map<String, Long> reach,
+    	    final String startTime,
+    	    final List<String> topHashTags,
+    	    final List<Long> topTweets,
+    	    final List<String> topUsers) {
 
-        this.reach.putAll(reach);
-        this.name = name;
-        this.startTime = startTime;
-        this.topUsers.addAll(topUsers);
-        this.topHashTags.addAll(topHashTags);
-        this.genderBreakdownPercentage.putAll(genderBreakdownPercentage);
-        
-        this.countryCodes = countryCodes;
+        this.countryBreakdownPercentage.putAll(countryBreakdownPercentage);
+        this.countryCode = countryCode;
+        this.deviceBreakdownPercentage.putAll(deviceBreakdownPercentage);
         this.endTime = endTime;
+        this.eventType = eventType;
+        this.genderBreakdownPercentage.putAll(genderBreakdownPercentage);
+        this.id = id;
+        this.isGlobal = isGlobal;
+        this.name = name;
+        this.reach.putAll(reach);
+        this.startTime = startTime;
+        this.topHashTags.addAll(topHashTags);
+        this.topTweets.addAll(topTweets);
+        this.topUsers.addAll(topUsers);
     }
+
+	public Map<String, Float> getCountryBreakdownPercentage() {
+		return countryBreakdownPercentage;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public Map<String, Float> getDeviceBreakdownPercentage() {
+		return deviceBreakdownPercentage;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public EventType getEventType() {
+		return eventType;
+	}
+
+	public Map<String, Float> getGenderBreakdownPercentage() {
+		return genderBreakdownPercentage;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public boolean isGlobal() {
+		return isGlobal;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Map<String, Long> getReach() {
+		return reach;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public List<String> getTopHashTags() {
+		return topHashTags;
+	}
+
+	public List<Long> getTopTweets() {
+		return topTweets;
+	}
+
+	public List<String> getTopUsers() {
+		return topUsers;
+	}
 
 
     

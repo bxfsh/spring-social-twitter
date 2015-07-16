@@ -26,7 +26,7 @@ import org.springframework.social.twitter.api.TwitterQueryForEntity;
  * @author Hudson Mendes
  */
 public interface TargetingCriteriaDiscoveryForEventsQuery extends TwitterQueryForEntity<TargetingCriteriaDiscoveryForEventsQuery> {
-	public TargetingCriteriaDiscoveryForEventsQuery withEventIds(List<Integer> eventIds);
+	public TargetingCriteriaDiscoveryForEventsQuery withEventIds(List<String> eventIds);
 	public TargetingCriteriaDiscoveryForEventsQuery withEventTypes(List<EventType> eventTypes);
 	public TargetingCriteriaDiscoveryForEventsQuery withCountryCodes(List<String> countryCodes);
 	public TargetingCriteriaDiscoveryForEventsQuery withStartTime(LocalDateTime startTime);

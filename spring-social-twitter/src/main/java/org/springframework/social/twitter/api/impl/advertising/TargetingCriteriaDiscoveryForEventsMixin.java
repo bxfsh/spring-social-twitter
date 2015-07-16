@@ -15,12 +15,35 @@
  */
 package org.springframework.social.twitter.api.impl.advertising;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.social.twitter.api.advertising.EventType;
 import org.springframework.social.twitter.api.impl.TwitterObjectMixin;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonDeserialize(using = TargetingCriteriaDiscoveryForEventsDeserializer.class)
 public abstract class TargetingCriteriaDiscoveryForEventsMixin extends TwitterObjectMixin {
+
+	@JsonCreator
+    TargetingCriteriaDiscoveryForEventsMixin(
+            @JsonProperty("country_breakdown_percentage") Map<String, Float> countryBreakdownPercentage,
+            @JsonProperty("country_code") String countryCode,
+            @JsonProperty("device_breakdown_percentage") Map<String, Float> deviceBreakdownPercentage,
+            @JsonProperty("end_time") String endTime,
+            @JsonProperty("event_type") EventType eventType,
+            @JsonProperty("gender_breakdown_percentage") Map<String, Float> genderBreakdownPercentage,
+            @JsonProperty("id") String id,
+            @JsonProperty("is_global") boolean isGlobal,
+            @JsonProperty("name") String name,
+            @JsonProperty("reach") Map<String, Long> reach,
+            @JsonProperty("start_time") String startTime,
+            @JsonProperty("top_hashtags") List<String> topHashTags,
+            @JsonProperty("top_tweets") List<Long> topTweets,
+            @JsonProperty("top_users") List<String> topUsers) {}
+
+
 }

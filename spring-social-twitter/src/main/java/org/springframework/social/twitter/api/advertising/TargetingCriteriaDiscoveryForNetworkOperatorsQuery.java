@@ -18,7 +18,7 @@ package org.springframework.social.twitter.api.advertising;
 import org.springframework.social.twitter.api.TwitterQueryForEntity;
 
 /**
- * Defines the data that will be used to query a list of {@link TargetingCriteriaDiscoveryForDevices}.
+ * Defines the data that will be used to query a list of {@link TargetingCriteriaDiscoveryForNetworkOperators}.
  * 
  * @author Hudson Mendes
  */
