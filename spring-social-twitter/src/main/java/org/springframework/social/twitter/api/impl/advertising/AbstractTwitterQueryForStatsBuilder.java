@@ -16,13 +16,13 @@
 package org.springframework.social.twitter.api.impl.advertising;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.social.twitter.api.advertising.StatisticsGranularity;
 import org.springframework.social.twitter.api.advertising.StatisticsMetric;
 import org.springframework.social.twitter.api.advertising.StatisticsSegmentationType;
+import org.springframework.social.twitter.api.impl.TwitterTimeStamp;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -33,7 +33,7 @@ import org.springframework.util.MultiValueMap;
  * and therefore we cannot use this base builder for _everything_. However,
  * it's reasonable the Twitter moves towards standardization and then, this
  * builder will become a richer asset to the Api.
- * 
+ *
  * @author Hudson Mendes
  */
 public abstract class AbstractTwitterQueryForStatsBuilder<TBuilderInterface>
@@ -46,7 +46,7 @@ public abstract class AbstractTwitterQueryForStatsBuilder<TBuilderInterface>
     private List<StatisticsMetric> metrics;
 
     public MultiValueMap<String, String> toQueryParameters() {
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 
         makeParameters(map);
 
@@ -57,9 +57,10 @@ public abstract class AbstractTwitterQueryForStatsBuilder<TBuilderInterface>
         appendParameter(map, "metrics", this.metrics);
 
         if (this.startTime != null)
-            appendParameter(map, "start_time", this.startTime.toInstant(ZoneOffset.UTC));
+            appendParameter(map, "start_time", new TwitterTimeStamp(this.startTime).toString());
+
         if (this.endTime != null)
-            appendParameter(map, "end_time", this.endTime.toInstant(ZoneOffset.UTC));
+            appendParameter(map, "end_time", new TwitterTimeStamp(this.endTime).toString());
 
         return map;
     }
@@ -97,8 +98,8 @@ public abstract class AbstractTwitterQueryForStatsBuilder<TBuilderInterface>
     public TBuilderInterface withStatisticalMetric(StatisticsMetric... metrics) {
         this.metrics = new ArrayList<StatisticsMetric>();
         if (metrics != null)
-            for (int i = 0; i < metrics.length; i++)
-                this.metrics.add(metrics[i]);
+            for (final StatisticsMetric metric : metrics)
+                this.metrics.add(metric);
         return (TBuilderInterface) this;
     }
 
