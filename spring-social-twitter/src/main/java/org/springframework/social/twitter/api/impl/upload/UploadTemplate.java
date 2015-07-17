@@ -16,11 +16,10 @@
 package org.springframework.social.twitter.api.impl.upload;
 
 import java.net.URI;
-import java.util.Arrays;
 
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.social.twitter.api.ton.TonOperations;
 import org.springframework.social.twitter.api.upload.UploadedEntity;
 import org.springframework.social.twitter.api.upload.UploadOperations;
@@ -51,14 +50,14 @@ public class UploadTemplate extends AbstractTwitterOperations implements UploadO
         requireUserAuthorization();
 
         MultiValueMap<String, Object> form = new LinkedMultiValueMap<String, Object>();
-        form.add("media", data);
+        form.add("media", new ByteArrayResource(data));
         
         URI uri = new TwitterApiBuilderForUri()
         		.withResource(TwitterApiUriResourceForUpload.UPLOAD)
         		.build();
 
         HttpEntity<?> entity = new TwitterApiBuilderForHttpEntity<>(form)
-        		.addHeader("Content-Type", Arrays.asList(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
+        		.multipart(true)
         		.build();
 
         return restTemplate.exchange(uri, HttpMethod.POST, entity, UploadedEntity.class).getBody();

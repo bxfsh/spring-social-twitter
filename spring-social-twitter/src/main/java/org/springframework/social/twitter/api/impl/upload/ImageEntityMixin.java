@@ -16,23 +16,18 @@
 package org.springframework.social.twitter.api.impl.upload;
 
 import org.springframework.social.twitter.api.impl.TwitterObjectMixin;
-import org.springframework.social.twitter.api.upload.Image;
-import org.springframework.social.twitter.api.upload.Video;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class UploadEntityMixin extends TwitterObjectMixin {
+public abstract class ImageEntityMixin extends TwitterObjectMixin {
 
 	@JsonCreator
-	public UploadEntityMixin(
-			@JsonProperty("media_id") long mediaId,
-			@JsonProperty("media_id_string")String mediaIdString, 
-			@JsonProperty("size")long size, 
-			@JsonProperty("expires_after_secs")long expiresAfterSecs, 
-			@JsonProperty("image")Image image, 
-			@JsonProperty("video")Video video) {}
+	public ImageEntityMixin(
+			@JsonProperty("image_type") String imageType, 
+			@JsonProperty("w") long w,
+			@JsonProperty("h") long h) {}
 	
 }

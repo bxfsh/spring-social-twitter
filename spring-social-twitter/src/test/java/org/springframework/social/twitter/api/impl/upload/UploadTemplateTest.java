@@ -17,22 +17,23 @@ package org.springframework.social.twitter.api.impl.upload;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withCreatedEntity;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URLConnection;
-import java.time.ZonedDateTime;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.social.twitter.api.impl.AbstractTwitterApiTest;
+import org.springframework.social.twitter.api.upload.UploadedEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 /**
  * @author Chris Latko
@@ -40,23 +41,24 @@ import org.springframework.social.twitter.api.impl.AbstractTwitterApiTest;
 public class UploadTemplateTest extends AbstractTwitterApiTest {
 	@SuppressWarnings("unused")
 	private final static Log logger = LogFactory.getLog(UploadTemplateTest.class);
-	private final static String BUCKET_NAME = "ta_partner";
-	private final static String RESPONSE_URI = "https://ton.twitter.com/1.1/ton/data/ta_partner/390472547/ffs.txt";
 	
     @Test
-    public void uploadChunk() throws IOException {
+    public void uploadSimple_test() throws IOException {
         mockServer
-                .expect(requestTo("https://ton.twitter.com/1.1/ton/bucket/ta_partner"))
+                .expect(requestTo("https://upload.twitter.com/1.1/media/upload.json"))
                 .andExpect(method(POST))
-                .andRespond(withCreatedEntity(URI.create(RESPONSE_URI)));
+                .andRespond(withSuccess(jsonResource("upload"), APPLICATION_JSON));
 
-        Resource resource = dataResource("hashed_twitter.txt");
+        Resource resource = dataResource("profilepic.gif");
         InputStream is = resource.getInputStream();
-        String contentType = URLConnection.guessContentTypeFromName(resource.getFilename());
         byte[] data = bufferObj(is);
-        ZonedDateTime expiry = ZonedDateTime.now().plusDays(7);
-        URI uri = twitter.tonOperations().uploadSingleChunk(BUCKET_NAME, data, contentType, expiry);
-        assertEquals(uri.toString(),RESPONSE_URI);
+        
+        MultiValueMap<String, Object> form = new LinkedMultiValueMap<String, Object>();
+        form.add("media", data);
+
+        UploadedEntity uploadedEntity = twitter.uploadOperations().uploadSimple(data);
+        assertEquals(12302,uploadedEntity.getSize());
+        assertEquals("image/png", uploadedEntity.getImage().getImageType());
     }
 
 	private byte[] bufferObj(final InputStream is) throws IOException {

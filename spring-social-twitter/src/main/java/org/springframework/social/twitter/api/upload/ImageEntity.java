@@ -21,16 +21,28 @@ import org.springframework.social.twitter.api.TwitterObject;
  * <p>A representation of uploaded media.</p>
  * @author clatko
  */
-public class Video extends TwitterObject {
+public class ImageEntity extends TwitterObject {
 	private static final long serialVersionUID = 1L;
-	private String videoType;
+	private String imageType;
+	private long w;
+	private long h;
 	
-	public Video(String videoType) {
-		this.videoType = videoType;
+	public ImageEntity(String imageType, long w, long h) {
+		this.imageType = imageType;
+		this.w = w;
+		this.h = h;
 	}
 
-	public String getVideoType() {
-		return videoType;
+	public String getImageType() {
+		return imageType;
+	}
+
+	public long getW() {
+		return w;
+	}
+
+	public long getH() {
+		return h;
 	}
 
 

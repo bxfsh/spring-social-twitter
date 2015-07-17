@@ -74,7 +74,7 @@ public class TwitterApiBuilderForUri {
 
 	public TwitterApiBuilderForUri withResource(TwitterApiUriResourceForUpload resource) {
         this.resource = resource.getPath();
-        return this.forTonApi();
+        return this.forUploadApi();
 	}
 
     public TwitterApiBuilderForUri withArgument(String argument, Object value) {

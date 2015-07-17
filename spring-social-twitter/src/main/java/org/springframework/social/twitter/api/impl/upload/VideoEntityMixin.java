@@ -13,37 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.social.twitter.api.upload;
+package org.springframework.social.twitter.api.impl.upload;
 
-import org.springframework.social.twitter.api.TwitterObject;
+import org.springframework.social.twitter.api.impl.TwitterObjectMixin;
 
-/**
- * <p>A representation of uploaded media.</p>
- * @author clatko
- */
-public class Image extends TwitterObject {
-	private static final long serialVersionUID = 1L;
-	private long w;
-	private long h;
-	private String imageType;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public abstract class VideoEntityMixin extends TwitterObjectMixin {
+
+	@JsonCreator
+	public VideoEntityMixin(
+			@JsonProperty("video_type") String videoType) {}
 	
-	public Image(long w, long h, String imageType) {
-		this.w = w;
-		this.h = h;
-		this.imageType = imageType;
-	}
-
-	public long getW() {
-		return w;
-	}
-
-	public long getH() {
-		return h;
-	}
-
-	public String getImageType() {
-		return imageType;
-	}
-
-
 }
