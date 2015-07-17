@@ -31,7 +31,8 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class TargetingCriteria extends TwitterObject {
-    private final String id;
+	private static final long serialVersionUID = 1L;
+	private final String id;
     private final String accountId;
     private final String lineItemId;
     private final String name;

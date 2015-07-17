@@ -13,32 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.social.twitter.api;
+package org.springframework.social.twitter.api.impl.upload;
 
-import java.util.Date;
-import java.util.List;
+import org.springframework.social.twitter.api.impl.TwitterObjectMixin;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Represents a list of trending topics at a specific point in time.
- * @author Craig Walls
- */
-public class Trends extends TwitterObject {
-	private static final long serialVersionUID = 1L;
-	private final Date time;
-	private final List<Trend> trends;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public abstract class VideoEntityMixin extends TwitterObjectMixin {
 
-	public Trends(Date time, List<Trend> trends) {
-		this.time = time;
-		this.trends = trends;
-	}
-
-	public Date getTime() {
-		return time;
-	}
-
-	public List<Trend> getTrends() {
-		return trends;
-	}
-
+	@JsonCreator
+	public VideoEntityMixin(
+			@JsonProperty("video_type") String videoType) {}
+	
 }

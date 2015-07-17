@@ -25,7 +25,8 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class TailoredAudienceChange extends TwitterObject {
-    private final String id;
+	private static final long serialVersionUID = 1L;
+	private final String id;
     private final String tailoredAudienceId;
     private final String inputFilePath;
     private final TailoredAudienceChangeOperation operation;

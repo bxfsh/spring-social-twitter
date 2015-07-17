@@ -29,7 +29,8 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class StatisticsSnapshot extends TwitterObject {
-    private final String id;
+	private static final long serialVersionUID = 1L;
+	private final String id;
     private final StatisticsSegmentation segmentation;
     private final StatisticsGranularity granularity;
     private final Map<StatisticsMetric, StatisticsSnapshotMetric> metrics = new HashMap<StatisticsMetric, StatisticsSnapshotMetric>();

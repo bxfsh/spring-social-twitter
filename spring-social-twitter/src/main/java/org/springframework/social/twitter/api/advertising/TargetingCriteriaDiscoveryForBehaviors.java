@@ -26,7 +26,8 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class TargetingCriteriaDiscoveryForBehaviors extends TwitterObject {
-    private final String audienceSize;
+	private static final long serialVersionUID = 1L;
+	private final String audienceSize;
     private final String behaviorTaxonomyId;
     private final String id;
     private final String name;

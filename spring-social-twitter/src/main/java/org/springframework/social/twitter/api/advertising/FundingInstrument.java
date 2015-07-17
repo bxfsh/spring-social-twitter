@@ -33,6 +33,7 @@ import org.springframework.social.twitter.api.TwitterObject;
  * @author Hudson Mendes
  */
 public class FundingInstrument extends TwitterObject {
+	private static final long serialVersionUID = 1L;
 	private final String id;
 	private final FundingInstrumentType type;
 	private final String accountId;

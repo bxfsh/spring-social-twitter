@@ -13,36 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.social.twitter.api;
+package org.springframework.social.twitter.api.upload;
 
-
+import org.springframework.social.twitter.api.TwitterObject;
 
 /**
- * Represents a suggestion category; a category of users that Twitter may suggest that a user follow.
- * @author Craig Walls
+ * <p>A representation of uploaded media.</p>
+ * @author clatko
  */
-public class SuggestionCategory extends TwitterObject {
+public class VideoEntity extends TwitterObject {
 	private static final long serialVersionUID = 1L;
-	private final String name;
-	private final String slug;
-	private final int size;
-
-	public SuggestionCategory(String name, String slug, int size) {
-		this.name = name;
-		this.slug = slug;
-		this.size = size;
+	private String videoType;
+	
+	public VideoEntity(String videoType) {
+		this.videoType = videoType;
 	}
 
-	public String getName() {
-		return name;
+	public String getVideoType() {
+		return videoType;
 	}
 
-	public String getSlug() {
-		return slug;
-	}
-
-	public int getSize() {
-		return size;
-	}
 
 }

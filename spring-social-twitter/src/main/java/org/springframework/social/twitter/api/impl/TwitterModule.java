@@ -86,6 +86,12 @@ import org.springframework.social.twitter.api.impl.advertising.TargetingCriteria
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryForTvMarketMixin;
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryForTvShowMixin;
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaMixin;
+import org.springframework.social.twitter.api.impl.upload.ImageEntityMixin;
+import org.springframework.social.twitter.api.impl.upload.UploadedEntityMixin;
+import org.springframework.social.twitter.api.impl.upload.VideoEntityMixin;
+import org.springframework.social.twitter.api.upload.ImageEntity;
+import org.springframework.social.twitter.api.upload.UploadedEntity;
+import org.springframework.social.twitter.api.upload.VideoEntity;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
@@ -151,6 +157,10 @@ public class TwitterModule extends SimpleModule {
         context.setMixInAnnotations(AccountSettings.TimeZone.class, AccountSettingsMixin.TimeZoneMixin.class);
         context.setMixInAnnotations(AccountSettings.SleepTime.class, AccountSettingsMixin.SleepTimeMixin.class);
         context.setMixInAnnotations(AccountSettings.TrendLocation.class, AccountSettingsMixin.TrendLocationMixin.class);
+
+        context.setMixInAnnotations(UploadedEntity.class, UploadedEntityMixin.class);
+        context.setMixInAnnotations(ImageEntity.class, ImageEntityMixin.class);
+        context.setMixInAnnotations(VideoEntity.class, VideoEntityMixin.class);
 
         context.setMixInAnnotations(OEmbedTweet.class, OEmbedTweetMixin.class);
     }

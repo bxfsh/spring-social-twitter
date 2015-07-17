@@ -52,7 +52,9 @@ import org.springframework.social.twitter.api.impl.advertising.TailoredAudienceT
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryTemplate;
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaTemplate;
 import org.springframework.social.twitter.api.impl.ton.TonTemplate;
+import org.springframework.social.twitter.api.impl.upload.UploadTemplate;
 import org.springframework.social.twitter.api.ton.TonOperations;
+import org.springframework.social.twitter.api.upload.UploadOperations;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
@@ -105,6 +107,8 @@ public class TwitterTemplate extends AbstractOAuth1ApiBinding implements Twitter
     private TailoredAudienceOperations tailoredAudienceOperations;
 
     private TonOperations tonOperations;
+
+    private UploadOperations uploadOperations;
 
     private RestTemplate clientRestTemplate = null;
 
@@ -277,6 +281,11 @@ public class TwitterTemplate extends AbstractOAuth1ApiBinding implements Twitter
     }
 
     @Override
+    public UploadOperations uploadOperations() {
+        return uploadOperations;
+    }
+
+    @Override
     public Settings settings() {
         return settings;
     }
@@ -347,6 +356,8 @@ public class TwitterTemplate extends AbstractOAuth1ApiBinding implements Twitter
         this.targetingCriteriaDiscoveryOperations = new TargetingCriteriaDiscoveryTemplate(getRestTemplate(), isAuthorized(), isAuthorized());
         this.tailoredAudienceOperations = new TailoredAudienceTemplate(getRestTemplate(), isAuthorized(), isAuthorized());
         this.tonOperations = new TonTemplate(getRestTemplate(), isAuthorized(), isAuthorized());
+
+        this.uploadOperations = new UploadTemplate(getRestTemplate(), isAuthorized(), isAuthorized());
 
         this.settings = new SettingsImpl();
     }
