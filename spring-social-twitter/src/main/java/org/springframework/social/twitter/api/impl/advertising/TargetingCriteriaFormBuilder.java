@@ -1,12 +1,12 @@
 /*
  * Copyright 2014 the original author or authors.
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -333,7 +333,7 @@ public class TargetingCriteriaFormBuilder extends AbstractTwitterFormBuilder imp
     }
 
     @Override
-    public TargetingCriteriaForm withStoreCategories(String... categories) {
+    public TargetingCriteriaForm withAppStoreCategories(String... categories) {
         if (categories != null)
             for (final String category : categories)
                 appStoreCategories.add(category);
@@ -341,7 +341,7 @@ public class TargetingCriteriaFormBuilder extends AbstractTwitterFormBuilder imp
     }
 
     @Override
-    public TargetingCriteriaForm withStoreCategiresLookAlike(String... categories) {
+    public TargetingCriteriaForm withAppStoreCategiresLookAlike(String... categories) {
         if (categories != null)
             for (final String category : categories)
                 appStoreCategiresLookAlike.add(category);
@@ -365,7 +365,7 @@ public class TargetingCriteriaFormBuilder extends AbstractTwitterFormBuilder imp
 
         appendParameter(params, "locations", locations, true);
         appendParameter(params, "interests", interests, true);
-        appendParameter(params, "gender", gender, true);
+        appendParameter(params, "gender", (gender != null ? gender.value() : null), true);
         appendParameter(params, "age_buckets", ageBuckets, true);
 
         appendParameter(params, "followers_of_users", followedUserIds, true);
@@ -373,7 +373,7 @@ public class TargetingCriteriaFormBuilder extends AbstractTwitterFormBuilder imp
         appendParameter(params, "platforms", platforms, true);
         appendParameter(params, "platform_versions", platformVersions, true);
         appendParameter(params, "devices", devices, true);
-        appendParameter(params, "wifi_only", wifiOnly, true);
+        appendParameter(params, "wifi_only", (wifiOnly != null ? (wifiOnly.booleanValue() ? 1 : 0) : null), true);
 
         appendParameter(params, "tv_channels", tvChannels, true);
         appendParameter(params, "tv_genres", tvGenres, true);

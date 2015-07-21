@@ -365,7 +365,7 @@ public interface TargetingCriteriaForm extends TwitterForm {
      * @param categories to which we want to advertise
      * @return the fluent builder
      */
-    public TargetingCriteriaForm withStoreCategories(String... categories);
+    public TargetingCriteriaForm withAppStoreCategories(String... categories);
 
     /**
      * A comma-separated string of app store category identifiers. Targeting will be scoped to lookalike app store categories on this line item.
@@ -374,5 +374,5 @@ public interface TargetingCriteriaForm extends TwitterForm {
      * @param categories to which we want to advertise
      * @return the fluent builder
      */
-    public TargetingCriteriaForm withStoreCategiresLookAlike(String... categories);
+    public TargetingCriteriaForm withAppStoreCategiresLookAlike(String... categories);
 }
