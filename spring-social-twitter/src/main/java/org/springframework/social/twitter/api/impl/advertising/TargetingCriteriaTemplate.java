@@ -17,9 +17,10 @@ package org.springframework.social.twitter.api.impl.advertising;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.social.twitter.api.advertising.TargetingCriteriaForm;
+import org.springframework.social.twitter.api.advertising.TargetingCriteriaOperations;
 import org.springframework.social.twitter.api.advertising.TargetingCriterion;
 import org.springframework.social.twitter.api.advertising.TargetingCriterionForm;
-import org.springframework.social.twitter.api.advertising.TargetingCriteriaOperations;
 import org.springframework.social.twitter.api.advertising.TargetingCriterionQuery;
 import org.springframework.social.twitter.api.impl.AbstractTwitterOperations;
 import org.springframework.social.twitter.api.impl.DataListHolder;
@@ -31,7 +32,7 @@ import org.springframework.web.client.RestTemplate;
 
 /**
  * Implementation of {@link TargetingCriteriaOperations}, providing a binding to Twitter's direct message-oriented REST resources.
- * 
+ *
  * @author Hudson Mendes
  */
 public class TargetingCriteriaTemplate extends AbstractTwitterOperations implements TargetingCriteriaOperations {
@@ -87,6 +88,20 @@ public class TargetingCriteriaTemplate extends AbstractTwitterOperations impleme
     }
 
     @Override
+    public DataListHolder<TargetingCriterion> setTargetingCriteria(String accountId, TargetingCriteriaForm data) {
+        requireUserAuthorization();
+        return restTemplate.exchange(
+                new TwitterApiBuilderForUri()
+                        .withResource(TwitterApiUriResourceForAdvertising.TARGETING_CRITERIAS)
+                        .withArgument("account_id", accountId)
+                        .build(),
+                HttpMethod.PUT,
+                new TwitterApiBuilderForHttpEntity<>(data.toRequestBody()).build(),
+                new ParameterizedTypeReference<DataListHolder<TargetingCriterion>>() {}
+                ).getBody();
+    }
+
+    @Override
     public void deleteTargetingCriterion(String accountId, String id) {
         requireUserAuthorization();
         restTemplate.delete(new TwitterApiBuilderForUri()
@@ -95,5 +110,4 @@ public class TargetingCriteriaTemplate extends AbstractTwitterOperations impleme
                 .withArgument("targeting_criteria_id", id)
                 .build());
     }
-
 }

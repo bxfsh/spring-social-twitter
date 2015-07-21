@@ -33,10 +33,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * @author Hudson Mendes
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class TargetingCriteriaMixin extends TwitterObjectMixin {
+public abstract class TargetingCriterionMixin extends TwitterObjectMixin {
 
     @JsonCreator
-    TargetingCriteriaMixin(
+    TargetingCriterionMixin(
             @JsonProperty("id") String id,
             @JsonProperty("account_id") String accountId,
             @JsonProperty("line_item_id") String lineItemId,
