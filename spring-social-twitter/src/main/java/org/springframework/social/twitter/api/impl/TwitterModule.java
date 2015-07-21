@@ -43,7 +43,7 @@ import org.springframework.social.twitter.api.advertising.PromotedUserReference;
 import org.springframework.social.twitter.api.advertising.StatisticsSnapshot;
 import org.springframework.social.twitter.api.advertising.TailoredAudience;
 import org.springframework.social.twitter.api.advertising.TailoredAudienceChange;
-import org.springframework.social.twitter.api.advertising.TargetingCriteria;
+import org.springframework.social.twitter.api.advertising.TargetingCriterion;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForAppStoreCategories;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForBehaviorTaxonomies;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForBehaviors;
@@ -85,7 +85,7 @@ import org.springframework.social.twitter.api.impl.advertising.TargetingCriteria
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryForTvGenreMixin;
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryForTvMarketMixin;
 import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaDiscoveryForTvShowMixin;
-import org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaMixin;
+import org.springframework.social.twitter.api.impl.advertising.TargetingCriterionMixin;
 import org.springframework.social.twitter.api.impl.upload.ImageEntityMixin;
 import org.springframework.social.twitter.api.impl.upload.UploadedEntityMixin;
 import org.springframework.social.twitter.api.impl.upload.VideoEntityMixin;
@@ -131,7 +131,7 @@ public class TwitterModule extends SimpleModule {
         context.setMixInAnnotations(FundingInstrument.class, FundingInstrumentMixin.class);
         context.setMixInAnnotations(LineItem.class, LineItemMixin.class);
         context.setMixInAnnotations(Campaign.class, CampaignMixin.class);
-        context.setMixInAnnotations(TargetingCriteria.class, TargetingCriteriaMixin.class);
+        context.setMixInAnnotations(TargetingCriterion.class, TargetingCriterionMixin.class);
         context.setMixInAnnotations(StatisticsSnapshot.class, StatisticsSnapshotMixin.class);
         context.setMixInAnnotations(TailoredAudience.class, TailoredAudienceMixin.class);
         context.setMixInAnnotations(GlobalOptOut.class, GlobalOptOutMixin.class);
