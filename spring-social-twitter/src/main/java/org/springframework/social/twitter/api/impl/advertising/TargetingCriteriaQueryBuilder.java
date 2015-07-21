@@ -15,25 +15,25 @@
  */
 package org.springframework.social.twitter.api.impl.advertising;
 
-import org.springframework.social.twitter.api.advertising.TargetingCriteria;
-import org.springframework.social.twitter.api.advertising.TargetingCriteriaQuery;
-import org.springframework.social.twitter.api.advertising.TargetingCriteriaSorting;
+import org.springframework.social.twitter.api.advertising.TargetingCriterion;
+import org.springframework.social.twitter.api.advertising.TargetingCriterionQuery;
+import org.springframework.social.twitter.api.advertising.TargetingCriterionSorting;
 import org.springframework.util.MultiValueMap;
 
 /**
  * Facilitates the creation of the query that will be
- * used to filter results from the {@link TargetingCriteria} endpoint.
+ * used to filter results from the {@link TargetingCriterion} endpoint.
  * 
  * @author Hudson Mendes
  */
 public class TargetingCriteriaQueryBuilder
-        extends AbstractTwitterQueryForSortableEntityBuilder<TargetingCriteriaQuery, TargetingCriteriaSorting>
-        implements TargetingCriteriaQuery {
+        extends AbstractTwitterQueryForSortableEntityBuilder<TargetingCriterionQuery, TargetingCriterionSorting>
+        implements TargetingCriterionQuery {
 
     private String lineItemId;
 
     @Override
-    public TargetingCriteriaQuery withLineItem(String lineItemId) {
+    public TargetingCriterionQuery withLineItem(String lineItemId) {
         this.lineItemId = lineItemId;
         return this;
     }

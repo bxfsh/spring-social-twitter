@@ -18,7 +18,7 @@ package org.springframework.social.twitter.api.impl.advertising;
 import java.time.LocalDateTime;
 
 import org.springframework.social.twitter.api.advertising.TailoredAudienceType;
-import org.springframework.social.twitter.api.advertising.TargetingCriteria;
+import org.springframework.social.twitter.api.advertising.TargetingCriterion;
 import org.springframework.social.twitter.api.impl.LocalDateTimeDeserializer;
 import org.springframework.social.twitter.api.impl.TwitterObjectMixin;
 
@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
- * Mixin class for adding Jackson annotations to {@link TargetingCriteria}.
+ * Mixin class for adding Jackson annotations to {@link TargetingCriterion}.
  * 
  * @author Hudson Mendes
  */

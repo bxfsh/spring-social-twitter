@@ -1,61 +1,61 @@
+/*
+ * Copyright 2014 the original author or authors.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.springframework.social.twitter.api.advertising;
 
-import org.springframework.social.twitter.api.TwitterForm;
-
 /**
- * Describes the contract for the builder of {@link TargetingCriteria}'s
- * data that will be posted / patched to the endpoint.
- * 
+ * Allow setting then entire set of {@link TargetingCriterion} for
+ * a particular {@link LineItem} all at once
+ *
  * @author Hudson Mendes
  */
-public interface TargetingCriteriaForm extends TwitterForm {
+public interface TargetingCriteriaForm {
 
-    /**
-     * The {@link LineItem} to which {@link TargetingCriteria} is related to.
-     * 
-     * @param lineItemId is the id of the {@link LineItem}
-     * @return the fluent builder
-     */
-    public abstract TargetingCriteriaForm withLineItem(String lineItemId);
+    public TargetingCriteriaForm forLineItem(String lineItem);
 
-    /**
-     * The name of the {@link TargetingCriteria}
-     * 
-     * @param name of the {@link TargetingCriteria};
-     * @return the fluent builder
-     */
-    public abstract TargetingCriteriaForm withName(String name);
+    public TargetingCriteriaForm withBroadKeywords(String... keywords);
 
-    /**
-     * The targeting definition of the {@link TargetingCriteria}.
-     * 
-     * @param targetingType is the type of targeting chosen.
-     * @param targetingValue is the value of the targeting chose.
-     * @return the fluent builder
-     */
-    public abstract TargetingCriteriaForm targeting(String targetingType, String targetingValue);
+    public TargetingCriteriaForm withExactKeywords(String... keywords);
 
-    /**
-     * The targeting definition of the {@link TargetingCriteria}.
-     * 
-     * @param targetingType is the type of targeting chosen; maybe any of the set out in {@link TargetingType}.
-     * @param targetingValue is the value of the targeting chose.
-     * @return the fluent builder
-     */
-    public abstract TargetingCriteriaForm targeting(TargetingType targetingType, String targetingValue);
+    public TargetingCriteriaForm withUnorderedKeywords(String... keywords);
 
-    /**
-     * Deletes the {@link TargetingCriteria}
-     * 
-     * @return the fluent builder
-     */
-    public abstract TargetingCriteriaForm active();
+    public TargetingCriteriaForm withPhraseKeywords(String... keywords);
 
-    /**
-     * Reactivate the {@link TargetingCriteria}.
-     * 
-     * @return the fluent builder.
-     */
-    public abstract TargetingCriteriaForm deleted();
+    public TargetingCriteriaForm withNegativeExactKeywords(String... keywords);
 
+    public TargetingCriteriaForm withNegativeUnorderedKeywords(String... keywords);
+
+    public TargetingCriteriaForm withNegativePhraseKeywords(String... keywords);
+
+    public TargetingCriteriaForm withLocations(String... locations);
+
+    public TargetingCriteriaForm withInterests(String... interests);
+
+    public TargetingCriteriaForm withGender(TargetingCriteriaGender gender);
+
+    public TargetingCriteriaForm withAgeBuckets(TargetingCriteriaAgeBucket... ageBuckets);
+
+    public TargetingCriteriaForm followersOfUsers(String... followedUserIds);
+
+    public TargetingCriteriaForm similarToUsers(String... similiarUserIds);
+
+    public TargetingCriteriaForm usingPlatforms(String... platforms);
+
+    public TargetingCriteriaForm usingPlatformVersions(String... versions);
+
+    public TargetingCriteriaForm usingDevices(String... devices);
+
+    public TargetingCriteriaForm onWifiOnly(Boolean wifiOnly);
 }

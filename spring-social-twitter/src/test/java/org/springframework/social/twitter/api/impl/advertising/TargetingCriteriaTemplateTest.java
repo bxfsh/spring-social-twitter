@@ -29,7 +29,7 @@ import java.time.Month;
 import java.util.List;
 
 import org.junit.Test;
-import org.springframework.social.twitter.api.advertising.TargetingCriteria;
+import org.springframework.social.twitter.api.advertising.TargetingCriterion;
 import org.springframework.social.twitter.api.impl.AbstractTwitterApiTest;
 import org.springframework.social.twitter.api.impl.DataListHolder;
 
@@ -50,7 +50,7 @@ public class TargetingCriteriaTemplateTest extends AbstractTwitterApiTest {
                 .andExpect(method(GET))
                 .andRespond(withSuccess(jsonResource("ad-targeting-criteria"), APPLICATION_JSON));
 
-        DataListHolder<TargetingCriteria> targetingCriterias = twitter.targetingCriteriaOperations().getTargetingCriterias(
+        DataListHolder<TargetingCriterion> targetingCriterias = twitter.targetingCriteriaOperations().getTargetingCriterions(
                 mockedAccountId,
                 new TargetingCriteriaQueryBuilder()
                         .withLineItem(mockedLineItemId)
@@ -68,7 +68,7 @@ public class TargetingCriteriaTemplateTest extends AbstractTwitterApiTest {
                 .andExpect(method(GET))
                 .andRespond(withSuccess(jsonResource("ad-targeting-criteria-single"), APPLICATION_JSON));
 
-        TargetingCriteria criteria = twitter.targetingCriteriaOperations().getTargetingCriteria(mockedAccountId, mockedTargetingCriteriaId);
+        TargetingCriterion criteria = twitter.targetingCriteriaOperations().getTargetingCriterion(mockedAccountId, mockedTargetingCriteriaId);
         assertSingleTargetingCriteriaContents(criteria);
     }
 
@@ -90,7 +90,7 @@ public class TargetingCriteriaTemplateTest extends AbstractTwitterApiTest {
                 .andExpect(content().string(chainedPostContent))
                 .andRespond(withSuccess(jsonResource("ad-targeting-criteria-single"), APPLICATION_JSON));
 
-        TargetingCriteria criteria = twitter.targetingCriteriaOperations().createTargetingCriteria(
+        TargetingCriterion criteria = twitter.targetingCriteriaOperations().createTargetingCriterion(
                 mockedAccountId,
                 new TargetingCriteriaFormBuilder()
                         .withLineItem(doesntMatterString)
@@ -101,7 +101,7 @@ public class TargetingCriteriaTemplateTest extends AbstractTwitterApiTest {
         assertSingleTargetingCriteriaContents(criteria);
     }
 
-    private void assertTargetCriteriaContents(List<TargetingCriteria> criterias) {
+    private void assertTargetCriteriaContents(List<TargetingCriterion> criterias) {
         assertEquals(4, criterias.size());
 
         assertEquals("2kzxf", criterias.get(0).getId());
@@ -145,7 +145,7 @@ public class TargetingCriteriaTemplateTest extends AbstractTwitterApiTest {
         assertEquals(LocalDateTime.of(2012, Month.DECEMBER, 06, 05, 11, 15), criterias.get(3).getUpdatedAt());
     }
 
-    private void assertSingleTargetingCriteriaContents(TargetingCriteria criteria) {
+    private void assertSingleTargetingCriteriaContents(TargetingCriterion criteria) {
         assertEquals("2rqqn", criteria.getId());
         assertEquals("hkk5", criteria.getAccountId());
         assertEquals("6zva", criteria.getLineItemId());

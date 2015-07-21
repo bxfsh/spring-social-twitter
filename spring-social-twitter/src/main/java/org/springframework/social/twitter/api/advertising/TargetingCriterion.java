@@ -30,7 +30,7 @@ import org.springframework.social.twitter.api.TwitterObject;
  * 
  * @author Hudson Mendes
  */
-public class TargetingCriteria extends TwitterObject {
+public class TargetingCriterion extends TwitterObject {
 	private static final long serialVersionUID = 1L;
 	private final String id;
     private final String accountId;
@@ -44,7 +44,7 @@ public class TargetingCriteria extends TwitterObject {
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
-    public TargetingCriteria(
+    public TargetingCriterion(
             String id,
             String accountId,
             String lineItemId,

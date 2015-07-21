@@ -15,19 +15,19 @@
  */
 package org.springframework.social.twitter.api.impl.advertising;
 
-import org.springframework.social.twitter.api.advertising.TargetingCriteria;
-import org.springframework.social.twitter.api.advertising.TargetingCriteriaForm;
-import org.springframework.social.twitter.api.advertising.TargetingType;
+import org.springframework.social.twitter.api.advertising.TargetingCriterion;
+import org.springframework.social.twitter.api.advertising.TargetingCriterionForm;
+import org.springframework.social.twitter.api.advertising.TargetingCriterionType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 /**
  * Facilitate the creation of the request body for post and put
- * requests made to the management of {@link TargetingCriteria} data.
+ * requests made to the management of {@link TargetingCriterion} data.
  * 
  * @author Hudson Mendes
  */
-public class TargetingCriteriaFormBuilder extends AbstractTwitterFormBuilder implements TargetingCriteriaForm {
+public class TargetingCriteriaFormBuilder extends AbstractTwitterFormBuilder implements TargetingCriterionForm {
     private String lineItemId;
     private String name;
     private String targetingType;
@@ -38,7 +38,7 @@ public class TargetingCriteriaFormBuilder extends AbstractTwitterFormBuilder imp
      * @see org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaForm#withLineItem(java.lang.String)
      */
     @Override
-    public TargetingCriteriaForm withLineItem(String lineItemId) {
+    public TargetingCriterionForm withLineItem(String lineItemId) {
         this.lineItemId = lineItemId;
         return this;
     }
@@ -47,7 +47,7 @@ public class TargetingCriteriaFormBuilder extends AbstractTwitterFormBuilder imp
      * @see org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaForm#withName(java.lang.String)
      */
     @Override
-    public TargetingCriteriaForm withName(String name) {
+    public TargetingCriterionForm withName(String name) {
         this.name = name;
         return this;
     }
@@ -56,7 +56,7 @@ public class TargetingCriteriaFormBuilder extends AbstractTwitterFormBuilder imp
      * @see org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaForm#targeting(java.lang.String, java.lang.String)
      */
     @Override
-    public TargetingCriteriaForm targeting(String targetingType, String targetingValue) {
+    public TargetingCriterionForm targeting(String targetingType, String targetingValue) {
         this.targetingType = targetingType;
         this.targetingValue = targetingValue;
         return this;
@@ -66,7 +66,7 @@ public class TargetingCriteriaFormBuilder extends AbstractTwitterFormBuilder imp
      * @see org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaForm#targeting(org.springframework.social.twitter.api.advertising.TargetingType, java.lang.String)
      */
     @Override
-    public TargetingCriteriaForm targeting(TargetingType targetingType, String targetingValue) {
+    public TargetingCriterionForm targeting(TargetingCriterionType targetingType, String targetingValue) {
         return targeting(targetingType.toString(), targetingValue);
     }
 
@@ -83,7 +83,7 @@ public class TargetingCriteriaFormBuilder extends AbstractTwitterFormBuilder imp
      * @see org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaForm#deleted()
      */
     @Override
-    public TargetingCriteriaForm deleted() {
+    public TargetingCriterionForm deleted() {
         this.deleted = true;
         return this;
     }

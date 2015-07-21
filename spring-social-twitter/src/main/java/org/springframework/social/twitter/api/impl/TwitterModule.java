@@ -43,7 +43,7 @@ import org.springframework.social.twitter.api.advertising.PromotedUserReference;
 import org.springframework.social.twitter.api.advertising.StatisticsSnapshot;
 import org.springframework.social.twitter.api.advertising.TailoredAudience;
 import org.springframework.social.twitter.api.advertising.TailoredAudienceChange;
-import org.springframework.social.twitter.api.advertising.TargetingCriteria;
+import org.springframework.social.twitter.api.advertising.TargetingCriterion;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForAppStoreCategories;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForBehaviorTaxonomies;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaDiscoveryForBehaviors;
@@ -131,7 +131,7 @@ public class TwitterModule extends SimpleModule {
         context.setMixInAnnotations(FundingInstrument.class, FundingInstrumentMixin.class);
         context.setMixInAnnotations(LineItem.class, LineItemMixin.class);
         context.setMixInAnnotations(Campaign.class, CampaignMixin.class);
-        context.setMixInAnnotations(TargetingCriteria.class, TargetingCriteriaMixin.class);
+        context.setMixInAnnotations(TargetingCriterion.class, TargetingCriteriaMixin.class);
         context.setMixInAnnotations(StatisticsSnapshot.class, StatisticsSnapshotMixin.class);
         context.setMixInAnnotations(TailoredAudience.class, TailoredAudienceMixin.class);
         context.setMixInAnnotations(GlobalOptOut.class, GlobalOptOutMixin.class);

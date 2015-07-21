@@ -25,7 +25,7 @@ package org.springframework.social.twitter.api.advertising;
  * @author Hudson Mendes
  *
  */
-public enum TargetingType {
+public enum TargetingCriterionType {
     AGE,
     FOLLOWERS_OF_USER,
     SIMILAR_TO_FOLLOWERS_OF_USER,
