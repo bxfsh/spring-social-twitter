@@ -17,6 +17,7 @@ package org.springframework.social.twitter.api.upload;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.social.ApiException;
 import org.springframework.social.MissingAuthorizationException;
 
@@ -57,10 +58,11 @@ public interface UploadOperations {
      * @param mediaId returned from INIT, this is needed to resume the upload
      * @param data the binary data
      * @param segmentId need to reassemble the appends in the proper order; 0-999 inclusive
+     * @return 
      * @throws ApiException if there is an error while communicating with Twitter.
      * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
      */
-    void uploadChunkedAppend(final String mediaId, final byte[] data, final int segmentId);
+    HttpStatus uploadChunkedAppend(final String mediaId, final byte[] data, final int segmentId);
 
     /**
      * Video uploads. They are chunked, this is the finalize stage

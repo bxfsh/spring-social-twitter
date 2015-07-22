@@ -21,6 +21,7 @@ import java.util.List;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.social.twitter.api.impl.AbstractTwitterOperations;
 import org.springframework.social.twitter.api.impl.TwitterApiBuilderForHttpEntity;
@@ -33,7 +34,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Implementation of {@link UploadOperations}, providing a binding to the Twitter Object Nest.
+ * Implementation of {@link UploadOperations}, providing single/chunked uploads.
  *
  * @author Chris Latko
  */
@@ -89,21 +90,21 @@ public class UploadTemplate extends AbstractTwitterOperations implements UploadO
     }
 
     @Override
-    public void uploadChunkedAppend(String mediaId, byte[] data, int segmentId) {
+    public HttpStatus uploadChunkedAppend(String mediaId, byte[] data, int segmentId) {
         requireUserAuthorization();
 
         final MultiValueMap<String, Object> form = new LinkedMultiValueMap<String, Object>();
         form.add("command", "APPEND");
         form.add("media_id", mediaId);
         form.add("media", new ByteArrayResource(data));
-        form.add("segment_index", segmentId);
+        form.add("segment_index", String.valueOf(segmentId));
 
         final HttpEntity<?> entity = new TwitterApiBuilderForHttpEntity<>(form)
                 .multipart(true)
                 .build();
 
         final ResponseEntity<UploadedEntity> response = restTemplate.exchange(getUri(), HttpMethod.POST, entity, UploadedEntity.class);
-        response.getHeaders();
+        return response.getStatusCode();
     }
 
     @Override
