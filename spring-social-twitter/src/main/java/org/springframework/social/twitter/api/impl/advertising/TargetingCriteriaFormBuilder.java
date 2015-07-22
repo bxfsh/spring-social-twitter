@@ -354,52 +354,52 @@ public class TargetingCriteriaFormBuilder extends AbstractTwitterFormBuilder imp
 
         appendParameter(params, "line_item_id", lineItemId);
 
-        appendParameter(params, "broad_keywords", broadKeywords, true);
-        appendParameter(params, "exact_keywords", exactKeywords, true);
-        appendParameter(params, "unordered_keywords", unorderedKeywords, true);
-        appendParameter(params, "phrase_keywords", phraseKeywords, true);
+        appendParameter(params, "broad_keywords", broadKeywords);
+        appendParameter(params, "exact_keywords", exactKeywords);
+        appendParameter(params, "unordered_keywords", unorderedKeywords);
+        appendParameter(params, "phrase_keywords", phraseKeywords);
 
-        appendParameter(params, "negative_exact_keywords", negativeExactKeywords, true);
-        appendParameter(params, "negative_unordered_keywords", negativeUnorderedKeywords, true);
-        appendParameter(params, "negative_phrase_keywords", negativePhraseKeywords, true);
+        appendParameter(params, "negative_exact_keywords", negativeExactKeywords);
+        appendParameter(params, "negative_unordered_keywords", negativeUnorderedKeywords);
+        appendParameter(params, "negative_phrase_keywords", negativePhraseKeywords);
 
-        appendParameter(params, "locations", locations, true);
-        appendParameter(params, "interests", interests, true);
-        appendParameter(params, "gender", (gender != null ? gender.value() : null), true);
-        appendParameter(params, "age_buckets", ageBuckets, true);
+        appendParameter(params, "locations", locations);
+        appendParameter(params, "interests", interests);
+        appendParameter(params, "gender", (gender != null ? gender.value() : null));
+        appendParameter(params, "age_buckets", ageBuckets);
 
-        appendParameter(params, "followers_of_users", followedUserIds, true);
-        appendParameter(params, "similar_to_followers_of_users", similarToUserIds, true);
-        appendParameter(params, "platforms", platforms, true);
-        appendParameter(params, "platform_versions", platformVersions, true);
-        appendParameter(params, "devices", devices, true);
-        appendParameter(params, "wifi_only", (wifiOnly != null ? (wifiOnly.booleanValue() ? 1 : 0) : null), true);
+        appendParameter(params, "followers_of_users", followedUserIds);
+        appendParameter(params, "similar_to_followers_of_users", similarToUserIds);
+        appendParameter(params, "platforms", platforms);
+        appendParameter(params, "platform_versions", platformVersions);
+        appendParameter(params, "devices", devices);
+        appendParameter(params, "wifi_only", (wifiOnly != null ? (wifiOnly.booleanValue() ? 1 : 0) : ""));
 
-        appendParameter(params, "tv_channels", tvChannels, true);
-        appendParameter(params, "tv_genres", tvGenres, true);
-        appendParameter(params, "tv_shows", tvShows, true);
+        appendParameter(params, "tv_channels", tvChannels);
+        appendParameter(params, "tv_genres", tvGenres);
+        appendParameter(params, "tv_shows", tvShows);
 
-        appendParameter(params, "tailored_audiences", tailoredAudiences, true);
-        appendParameter(params, "tailored_audiences_expanded", tailoredAudiencesExpanded, true);
-        appendParameter(params, "tailored_audiences_excluded", tailoredAudiencesExclusions, true);
+        appendParameter(params, "tailored_audiences", tailoredAudiences);
+        appendParameter(params, "tailored_audiences_expanded", tailoredAudiencesExpanded);
+        appendParameter(params, "tailored_audiences_excluded", tailoredAudiencesExclusions);
 
-        appendParameter(params, "behaviors", behaviors, true);
-        appendParameter(params, "behaviors_expanded", behaviorsExpanded, true);
-        appendParameter(params, "negative_behaviors", behavioursNegative, true);
+        appendParameter(params, "behaviors", behaviors);
+        appendParameter(params, "behaviors_expanded", behaviorsExpanded);
+        appendParameter(params, "negative_behaviors", behavioursNegative);
 
-        appendParameter(params, "languages", languages, true);
-        appendParameter(params, "event", eventId, true);
+        appendParameter(params, "languages", languages);
+        appendParameter(params, "event", eventId);
 
-        appendParameter(params, "network_operators", networkOperators, true);
-        appendParameter(params, "network_activation_duration_lt", networkActivationDurationLess, true);
-        appendParameter(params, "network_activation_duration_gte", networkActivationDurationMoreOrEqualsTo, true);
+        appendParameter(params, "network_operators", networkOperators);
+        appendParameter(params, "network_activation_duration_lt", networkActivationDurationLess);
+        appendParameter(params, "network_activation_duration_gte", networkActivationDurationMoreOrEqualsTo);
 
-        appendParameter(params, "app_store_categories", appStoreCategories, true);
-        appendParameter(params, "app_store_categories_lookalike", appStoreCategiresLookAlike, true);
+        appendParameter(params, "app_store_categories", appStoreCategories);
+        appendParameter(params, "app_store_categories_lookalike", appStoreCategiresLookAlike);
 
-        appendParameter(params, "campaign_engagement", retargetingEngagementCampaignId, true);
-        appendParameter(params, "user_engagement", retargetingEngagementPromotedUserReferenceId, true);
-        appendParameter(params, "engagement_type", retargetingEngagementType, true);
+        appendParameter(params, "campaign_engagement", retargetingEngagementCampaignId);
+        appendParameter(params, "user_engagement", retargetingEngagementPromotedUserReferenceId);
+        appendParameter(params, "engagement_type", retargetingEngagementType);
 
         return params;
     }
