@@ -45,11 +45,12 @@ public interface UploadOperations {
      * @param totalSize the total size of the entire upload
      * @param contentType mime type of data, must conform to http://www.iana.org/assignments/media-types/media-types.xhtml
      * @param ownerIds Comma-separated string of user IDs to set as additional owners ; maximum of 100
+     * @return UploadedEntity
      * @throws ApiException if there is an error while communicating with Twitter.
      * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
      */
-    UploadedEntity uploadChunkedInit(final int totalSize, final String contentType);
     UploadedEntity uploadChunkedInit(final int totalSize, final String contentType, final List<String> ownerIds);
+    UploadedEntity uploadChunkedInit(final int totalSize, final String contentType);
 
     /**
      * Video uploads. They are chunked, this is the append stage.
@@ -58,7 +59,7 @@ public interface UploadOperations {
      * @param mediaId returned from INIT, this is needed to resume the upload
      * @param data the binary data
      * @param segmentId need to reassemble the appends in the proper order; 0-999 inclusive
-     * @return 
+     * @return HttpStatus
      * @throws ApiException if there is an error while communicating with Twitter.
      * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
      */
@@ -69,8 +70,7 @@ public interface UploadOperations {
      * For more info: https://dev.twitter.com/rest/reference/post/media/upload-chunked.
      *
      * @param mediaId returned from INIT, this is needed to finalize the upload
-     * @param data the binary data
-     * @param contentType mime type of data, must conform to http://www.iana.org/assignments/media-types/media-types.xhtml
+     * @return UploadedEntity
      * @throws ApiException if there is an error while communicating with Twitter.
      * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
      */
