@@ -26,9 +26,11 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
@@ -41,9 +43,9 @@ import org.springframework.social.twitter.api.upload.UploadedEntity;
  * @author Chris Latko
  */
 public class UploadTemplateTest extends AbstractTwitterApiTest {
-	@SuppressWarnings("unused")
-	private final static Log logger = LogFactory.getLog(UploadTemplateTest.class);
-	
+    @SuppressWarnings("unused")
+    private final static Log logger = LogFactory.getLog(UploadTemplateTest.class);
+
     @Test
     public void uploadSimple_test() throws IOException {
         mockServer
@@ -51,61 +53,65 @@ public class UploadTemplateTest extends AbstractTwitterApiTest {
                 .andExpect(method(POST))
                 .andRespond(withSuccess(jsonResource("upload"), APPLICATION_JSON));
 
-        Resource resource = dataResource("profilepic.gif");
-        InputStream is = resource.getInputStream();
-        byte[] data = bufferObj(is);
-        
-        UploadedEntity uploadedEntity = twitter.uploadOperations().uploadSimple(data);
-        assertEquals(12302,uploadedEntity.getSize());
+        final Resource resource = dataResource("profilepic.gif");
+        final InputStream is = resource.getInputStream();
+        final byte[] data = bufferObj(is);
+
+        final UploadedEntity uploadedEntity = twitter.uploadOperations().uploadSimple(data);
+        assertEquals(12302, uploadedEntity.getSize());
         assertEquals("image/png", uploadedEntity.getImage().getImageType());
     }
 
     @Test
     public void uploadChunk_test() throws IOException {
-        String mediaId = init_test();
+        final String mediaId = init_test();
     }
 
-    
-    private String init_test() {
-    	String command = ChunkCommandType.INIT.name();
-    	String contentType = "video/mp4";
-    	int totalSize = 383631;
-    	
-        StringBuilder sb = new StringBuilder();
-        sb.append("command=" + command);
-        sb.append("&");
-        sb.append("media_type=" + contentType);
-        sb.append("&");
-        sb.append("total_bytes=" + String.valueOf(totalSize));
-    	
-    	MockMultipartHttpServletRequest request = new MockMultipartHttpServletRequest();
-    	request.addParameter("command", command);
-    	request.addParameter("media_type", contentType);
-    	request.addParameter("total_bytes", String.valueOf(totalSize));
-    	
-        mockServer
-        .expect(requestTo("https://upload.twitter.com/1.1/media/upload.json"))
-        .andExpect(method(POST))
-        .andExpect(content().string(sb.toString()))
-        .andRespond(withSuccess(jsonResource("init"), APPLICATION_JSON));
 
-    	UploadedEntity uploadedEntity = twitter.uploadOperations().uploadChunkedInit(totalSize, contentType);
-    	assertEquals("623694170260049925",uploadedEntity.getMediaIdString());
+    private String init_test() throws UnsupportedEncodingException {
+        final String command = ChunkCommandType.INIT.name();
+        final String contentType = "video/mp4";
+        final int totalSize = 383631;
+
+        final MockMultipartHttpServletRequest request = new MockMultipartHttpServletRequest();
+        request.addParameter("command", command);
+        request.addParameter("media_type", contentType);
+        request.addParameter("total_bytes", String.valueOf(totalSize));
+
+        /*
+         * final StringBuilder sb = new StringBuilder();
+         * sb.append("command=" + command);
+         * sb.append("&");
+         * sb.append("total_bytes=" + String.valueOf(totalSize));
+         * sb.append("&");
+         * sb.append("media_type=" + URLEncoder.encode(contentType, UTF8));
+         */
+
+        mockServer
+                .expect(requestTo("https://upload.twitter.com/1.1/media/upload.json"))
+                .andExpect(method(POST))
+                .andExpect(content().string(CoreMatchers.containsString(command)))
+                .andExpect(content().string(CoreMatchers.containsString(contentType)))
+                .andExpect(content().string(CoreMatchers.containsString(String.valueOf(totalSize))))
+                .andRespond(withSuccess(jsonResource("init"), APPLICATION_JSON));
+
+        final UploadedEntity uploadedEntity = twitter.uploadOperations().uploadChunkedInit(totalSize, contentType);
+        assertEquals("623694170260049925", uploadedEntity.getMediaIdString());
         assertEquals(3599, uploadedEntity.getExpiresAfterSecs());
 
         return uploadedEntity.getMediaIdString();
     }
-    
-    public void append_test(final String mediaId) throws IOException {
-        Resource resource = dataResource("small.mp4");
-        InputStream is = resource.getInputStream();
-        byte[] data = bufferObj(is);
 
-    	
-    	String command = ChunkCommandType.APPEND.name();
-    	int segmentId = 0;
-    	
-        StringBuilder sb = new StringBuilder();
+    public void append_test(final String mediaId) throws IOException {
+        final Resource resource = dataResource("small.mp4");
+        final InputStream is = resource.getInputStream();
+        final byte[] data = bufferObj(is);
+
+
+        final String command = ChunkCommandType.APPEND.name();
+        final int segmentId = 0;
+
+        final StringBuilder sb = new StringBuilder();
         sb.append("command=" + command);
         sb.append("&");
         sb.append("media_id=" + mediaId);
@@ -114,10 +120,10 @@ public class UploadTemplateTest extends AbstractTwitterApiTest {
         sb.append("&");
         sb.append("media=" + String.valueOf(segmentId));
 
-        MockMultipartFile mockMultipartFile = new MockMultipartFile("media", data);
-    	MockMultipartHttpServletRequest request = new MockMultipartHttpServletRequest();
-    	request.addFile(mockMultipartFile);
-    	
+        final MockMultipartFile mockMultipartFile = new MockMultipartFile("media", data);
+        final MockMultipartHttpServletRequest request = new MockMultipartHttpServletRequest();
+        request.addFile(mockMultipartFile);
+
         mockServer
                 .expect(requestTo("https://upload.twitter.com/1.1/media/upload.json"))
                 .andExpect(method(POST))
@@ -125,20 +131,19 @@ public class UploadTemplateTest extends AbstractTwitterApiTest {
                 .andRespond(withSuccess(jsonResource("upload"), APPLICATION_JSON));
 
         twitter.uploadOperations().uploadChunkedAppend(mediaId, data, 0);
-//        assertEquals(12302,uploadedEntity.getSize());
-//        assertEquals("image/png", uploadedEntity.getImage().getImageType());
+        //        assertEquals(12302,uploadedEntity.getSize());
+        //        assertEquals("image/png", uploadedEntity.getImage().getImageType());
     }
 
-    
-    
+
+
     private byte[] bufferObj(final InputStream is) throws IOException {
-    	ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-    	int count;
-    	byte[] data = new byte[16384];
-    	while((count = is.read(data, 0, data.length)) != -1) {
-    		buffer.write(data, 0, count);
-    	}
-    	buffer.flush();
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int count;
+        final byte[] data = new byte[16384];
+        while ((count = is.read(data, 0, data.length)) != -1)
+            buffer.write(data, 0, count);
+        buffer.flush();
         return buffer.toByteArray();
     }
 
