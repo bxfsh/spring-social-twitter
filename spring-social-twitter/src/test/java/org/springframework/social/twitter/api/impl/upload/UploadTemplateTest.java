@@ -1,12 +1,12 @@
 /*
  * Copyright 2014 the original author or authors.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,6 +15,7 @@
  */
 package org.springframework.social.twitter.api.impl.upload;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -30,7 +31,6 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
@@ -90,9 +90,12 @@ public class UploadTemplateTest extends AbstractTwitterApiTest {
         mockServer
                 .expect(requestTo("https://upload.twitter.com/1.1/media/upload.json"))
                 .andExpect(method(POST))
-                .andExpect(content().string(CoreMatchers.containsString(command)))
-                .andExpect(content().string(CoreMatchers.containsString(contentType)))
-                .andExpect(content().string(CoreMatchers.containsString(String.valueOf(totalSize))))
+                .andExpect(content().string(containsString("Content-Disposition: form-data; name=\"command\"")))
+                .andExpect(content().string(containsString("Content-Disposition: form-data; name=\"media_type\"")))
+                .andExpect(content().string(containsString("Content-Disposition: form-data; name=\"total_bytes\"")))
+                .andExpect(content().string(containsString(command)))
+                .andExpect(content().string(containsString(contentType)))
+                .andExpect(content().string(containsString(String.valueOf(totalSize))))
                 .andRespond(withSuccess(jsonResource("init"), APPLICATION_JSON));
 
         final UploadedEntity uploadedEntity = twitter.uploadOperations().uploadChunkedInit(totalSize, contentType);
