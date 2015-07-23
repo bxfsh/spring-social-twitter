@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.springframework.social.twitter.api.advertising.RetargetingEngagementType;
+import org.springframework.social.twitter.api.advertising.TailoredAudienceType;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaAgeBucket;
 import org.springframework.social.twitter.api.advertising.TargetingCriteriaGender;
 import org.springframework.social.twitter.api.advertising.TargetingCriterion;
@@ -87,7 +88,9 @@ public class TargetingCriteriaTemplateTest extends AbstractTwitterApiTest {
                         "name=" + doesntMatterString + "&" +
                         "targeting_type=" + "APP_STORE_CATEGORY" + "&" +
                         "targeting_value=" + doesntMatterString + "&" +
-                        "deleted=" + doesntMatterBool;
+                        "deleted=" + doesntMatterBool + "&" +
+                        "tailored_audience_expansion=" + doesntMatterBool + "&" +
+                        "tailored_audience_type=" + TailoredAudienceType.EXCLUDED_MOBILE;
 
         mockServer
                 .expect(requestTo("https://ads-api.twitter.com/0/accounts/" + mockedAccountId + "/targeting_criteria"))
@@ -100,6 +103,8 @@ public class TargetingCriteriaTemplateTest extends AbstractTwitterApiTest {
                 new TargetingCriterionFormBuilder()
                         .withLineItem(doesntMatterString)
                         .withName(doesntMatterString)
+                        .withTargetedAudienceExpansion(doesntMatterBool)
+                        .withTargetedAudienceType(TailoredAudienceType.EXCLUDED_MOBILE)
                         .targeting("APP_STORE_CATEGORY", doesntMatterString)
                         .active());
 
@@ -256,14 +261,16 @@ public class TargetingCriteriaTemplateTest extends AbstractTwitterApiTest {
     }
 
     private void assertSingleTargetingCriterionContents(TargetingCriterion criteria) {
-        assertEquals("2rqqn", criteria.getId());
-        assertEquals("hkk5", criteria.getAccountId());
-        assertEquals("6zva", criteria.getLineItemId());
-        assertEquals("Portland OR, US", criteria.getName());
-        assertEquals("LOCATION", criteria.getTargetingType());
-        assertEquals("b6b8d75a320f81d9", criteria.getTargetingValue());
+        assertEquals("31l8r", criteria.getId());
+        assertEquals("gq0vqj", criteria.getAccountId());
+        assertEquals("bcrv", criteria.getLineItemId());
+        assertEquals("Mobile audience targeting", criteria.getName());
+        assertEquals(false, criteria.isTailoredAudienceExpansion());
+        assertEquals(TailoredAudienceType.EXCLUDED_MOBILE, criteria.getTailoredAudienceType());
+        assertEquals("TAILORED_AUDIENCE", criteria.getTargetingType());
+        assertEquals("qsb3", criteria.getTargetingValue());
         assertEquals(false, criteria.isDeleted());
-        assertEquals(LocalDateTime.of(2012, Month.DECEMBER, 13, 22, 51, 32), criteria.getCreatedAt());
-        assertEquals(LocalDateTime.of(2012, Month.DECEMBER, 13, 22, 51, 32), criteria.getUpdatedAt());
+        assertEquals(LocalDateTime.of(2015, Month.JULY, 23, 23, 14, 37), criteria.getCreatedAt());
+        assertEquals(LocalDateTime.of(2015, Month.JULY, 23, 23, 14, 37), criteria.getUpdatedAt());
     }
 }

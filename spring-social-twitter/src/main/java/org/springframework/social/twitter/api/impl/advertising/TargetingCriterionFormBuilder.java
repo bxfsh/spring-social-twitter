@@ -15,6 +15,7 @@
  */
 package org.springframework.social.twitter.api.impl.advertising;
 
+import org.springframework.social.twitter.api.advertising.TailoredAudienceType;
 import org.springframework.social.twitter.api.advertising.TargetingCriterion;
 import org.springframework.social.twitter.api.advertising.TargetingCriterionForm;
 import org.springframework.social.twitter.api.advertising.TargetingCriterionType;
@@ -33,6 +34,8 @@ public class TargetingCriterionFormBuilder extends AbstractTwitterFormBuilder im
     private String targetingType;
     private String targetingValue;
     private Boolean deleted;
+    protected Boolean targetAudienceExpansion;
+    protected TailoredAudienceType tailoredAudienceType;
 
     /* (non-Javadoc)
      * @see org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaForm#withLineItem(java.lang.String)
@@ -88,6 +91,24 @@ public class TargetingCriterionFormBuilder extends AbstractTwitterFormBuilder im
         return this;
     }
 
+    /* (non-Javadoc)
+     * @see org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaForm#withTargetedAudienceExpansion(java.lang.Boolean)
+     */
+    @Override
+    public TargetingCriterionForm withTargetedAudienceExpansion(final Boolean targetAudienceExpansion) {
+        this.targetAudienceExpansion = targetAudienceExpansion;
+        return this;
+    }
+
+    /* (non-Javadoc)
+     * @see org.springframework.social.twitter.api.impl.advertising.TargetingCriteriaForm#withTargetedAudienceType(org.springframework.social.twitter.api.advertising.TailoredAudienceType)
+     */
+    @Override
+    public TargetingCriterionForm withTargetedAudienceType(final TailoredAudienceType tailoredAudienceType) {
+        this.tailoredAudienceType = tailoredAudienceType;
+        return this;
+    }
+
     @Override
     public MultiValueMap<String, String> toRequestBody() {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
@@ -97,6 +118,8 @@ public class TargetingCriterionFormBuilder extends AbstractTwitterFormBuilder im
         appendParameter(params, "targeting_type", this.targetingType);
         appendParameter(params, "targeting_value", this.targetingValue);
         appendParameter(params, "deleted", this.deleted);
+        appendParameter(params, "tailored_audience_expansion", this.targetAudienceExpansion);
+        appendParameter(params, "tailored_audience_type", this.tailoredAudienceType);
 
         return params;
     }

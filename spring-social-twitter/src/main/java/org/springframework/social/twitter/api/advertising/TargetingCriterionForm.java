@@ -58,4 +58,20 @@ public interface TargetingCriterionForm extends TwitterForm {
      */
     public abstract TargetingCriterionForm deleted();
 
+    /**
+     * A boolean value for expansion. Only available for Tailored Audience CRM.
+     * 
+     * @param targetAudienceExpansion if expansion should be run on tailored audiences
+     * @return the fluent builder
+     */
+    public abstract TargetingCriterionForm withTargetedAudienceExpansion(final Boolean targetAudienceExpansion);
+
+    /**
+     * A value for the tailored audience type.
+     * 
+     * @param tailoredAudienceType Example Values: WEB, CRM, MOBILE, EXCLUDED_WEB,EXCLUDED_CRM, EXCLUDED_MOBILE
+     * @return the fluent builder
+     */
+    public abstract TargetingCriterionForm withTargetedAudienceType(final TailoredAudienceType tailoredAudienceType);
+
 }
