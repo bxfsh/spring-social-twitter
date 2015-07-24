@@ -28,15 +28,15 @@ import org.springframework.social.twitter.api.TwitterObject;
  */
 public class LineItemPlacements extends TwitterObject {
 	private static final long serialVersionUID = 1L;
-	private final List<AdvertisingPlacement> placements;
+	private final List<List<AdvertisingPlacement>> placements;
 	private final AdvertisingProductType productType;
 
-	public LineItemPlacements(List<AdvertisingPlacement> placements, AdvertisingProductType productType) {
+	public LineItemPlacements(List<List<AdvertisingPlacement>> placements, AdvertisingProductType productType) {
 		this.placements = placements;
 		this.productType = productType;
 	}
 
-	public List<AdvertisingPlacement> getPlacements() {
+	public List<List<AdvertisingPlacement>> getPlacements() {
 		return placements;
 	}
 

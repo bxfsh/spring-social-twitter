@@ -36,10 +36,12 @@ public class LineItemPlacementsQueryBuilder
 
     @Override
     public LineItemPlacementsQuery withProductTypes(List<AdvertisingProductType> productTypes) {
-    	for(final AdvertisingProductType productType: productTypes) {
-    		this.productTypes.add(productType);
-        }
-        return this;
+    	if(null!=productTypes) {
+    		for(final AdvertisingProductType productType: productTypes) {
+    			this.productTypes.add(productType);
+    		}
+    	}
+    	return this;
     }
 
     @Override

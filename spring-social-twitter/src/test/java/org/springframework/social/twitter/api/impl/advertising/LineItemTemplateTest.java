@@ -44,6 +44,7 @@ import org.springframework.social.twitter.api.advertising.AdvertisingSentiment;
 import org.springframework.social.twitter.api.advertising.BidUnit;
 import org.springframework.social.twitter.api.advertising.LineItem;
 import org.springframework.social.twitter.api.advertising.LineItemOptimization;
+import org.springframework.social.twitter.api.advertising.LineItemPlacements;
 import org.springframework.social.twitter.api.impl.AbstractTwitterApiTest;
 import org.springframework.social.twitter.api.impl.DataListHolder;
 
@@ -190,7 +191,28 @@ public class LineItemTemplateTest extends AbstractTwitterApiTest {
         twitter.lineItemOperations().deleteLineItem(mockedAccountId, mockedLineItemId);
     }
 
-    private void assertLineItemContents(List<LineItem> lineItems) {
+    @Test
+    public void getLineItemPlacements() throws UnsupportedEncodingException {
+        mockServer
+                .expect(requestTo(
+                        "https://ads-api.twitter.com/0/line_items/placements"))
+                .andExpect(method(GET))
+                .andRespond(withSuccess(jsonResource("line-item-placements"), APPLICATION_JSON));
+
+        DataListHolder<LineItemPlacements> lineItemPlacements = twitter.lineItemOperations().getLineItemPlacements(
+                new LineItemPlacementsQueryBuilder()
+                        .withProductTypes(null));
+
+        assertLineItemPlacementsContents(lineItemPlacements.getList());
+    }
+
+    private void assertLineItemPlacementsContents(List<LineItemPlacements> lineItemPlacements) {
+        assertEquals(2, lineItemPlacements.size());
+        assertEquals(6, lineItemPlacements.get(0).getPlacements().size());
+        assertEquals(AdvertisingPlacement.TWITTER_TIMELINE, lineItemPlacements.get(0).getPlacements().get(3).get(1));
+	}
+
+	private void assertLineItemContents(List<LineItem> lineItems) {
         assertEquals(22, lineItems.size());
 
         assertEquals("awvv", lineItems.get(0).getId());
