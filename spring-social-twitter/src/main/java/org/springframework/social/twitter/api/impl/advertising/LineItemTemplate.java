@@ -20,6 +20,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.social.twitter.api.advertising.LineItem;
 import org.springframework.social.twitter.api.advertising.LineItemForm;
 import org.springframework.social.twitter.api.advertising.LineItemOperations;
+import org.springframework.social.twitter.api.advertising.LineItemPlacements;
+import org.springframework.social.twitter.api.advertising.LineItemPlacementsQuery;
 import org.springframework.social.twitter.api.advertising.LineItemQuery;
 import org.springframework.social.twitter.api.impl.AbstractTwitterOperations;
 import org.springframework.social.twitter.api.impl.DataListHolder;
@@ -103,5 +105,18 @@ public class LineItemTemplate extends AbstractTwitterOperations implements LineI
                 .withArgument("line_item_id", id)
                 .build());
     }
+
+	@Override
+	public DataListHolder<LineItemPlacements> getLineItemPlacements(LineItemPlacementsQuery query) {
+        return restTemplate.exchange(
+                new TwitterApiBuilderForUri()
+                        .withResource(TwitterApiUriResourceForAdvertising.LINE_ITEM_PLACEMENTS)
+                        .withArgument(query.toQueryParameters())
+                        .build(),
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<DataListHolder<LineItemPlacements>>() {}
+                ).getBody();
+	}
 
 }

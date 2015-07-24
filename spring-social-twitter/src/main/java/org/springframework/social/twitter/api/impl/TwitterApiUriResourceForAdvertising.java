@@ -22,6 +22,8 @@ public enum TwitterApiUriResourceForAdvertising {
 
     LINE_ITEMS("accounts/:account_id/line_items"),
     LINE_ITEM("accounts/:account_id/line_items/:line_item_id"),
+    
+    LINE_ITEM_PLACEMENTS("line_items/placements"),
 
     TARGETING_CRITERIAS("accounts/:account_id/targeting_criteria"),
     TARGETING_CRITERIA("accounts/:account_id/targeting_criteria/:targeting_criteria_id"),

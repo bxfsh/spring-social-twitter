@@ -29,6 +29,16 @@ public interface LineItemOperations {
     /**
      * Retrieves a {@link LineItem} linked to a particular {@link AdvertisingAccount} referred to by its id.
      * 
+     * @param query Scope the results by a specific product type.
+     * @return a list of {@link LineItemPlacements}
+     * @throws ApiException if there is an error while communicating with Twitter.
+     * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
+     */
+	DataListHolder<LineItemPlacements> getLineItemPlacements(LineItemPlacementsQuery query);
+
+    /**
+     * Retrieves a {@link LineItem} linked to a particular {@link AdvertisingAccount} referred to by its id.
+     * 
      * @param accountId identifies the account for which we wish to get the particular line item.
      * @param id identifies which line id we wish to retrieve.
      * @return an instance of {@link LineItem}
