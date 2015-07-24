@@ -97,7 +97,7 @@ public class TargetingCriterion extends TwitterObject {
         return targetingValue;
     }
 
-    public boolean isTailoredAudienceExpansion() {
+    public Boolean isTailoredAudienceExpansion() {
         return tailoredAudienceExpansion;
     }
 
