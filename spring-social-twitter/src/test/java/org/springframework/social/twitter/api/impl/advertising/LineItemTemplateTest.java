@@ -33,6 +33,7 @@ import java.math.MathContext;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.CoreMatchers;
@@ -206,13 +207,36 @@ public class LineItemTemplateTest extends AbstractTwitterApiTest {
         assertLineItemPlacementsContents(lineItemPlacements.getList());
     }
 
-    private void assertLineItemPlacementsContents(List<LineItemPlacements> lineItemPlacements) {
+    @Test
+    public void getLineItemPlacementsWithParams() throws UnsupportedEncodingException {
+        mockServer
+                .expect(requestTo(
+                        "https://ads-api.twitter.com/0/line_items/placements?product_type=PROMOTED_ACCOUNT"))
+                .andExpect(method(GET))
+                .andRespond(withSuccess(jsonResource("line-item-placements-params"), APPLICATION_JSON));
+
+        List<AdvertisingProductType> productTypes = new ArrayList<AdvertisingProductType>();
+        productTypes.add(AdvertisingProductType.PROMOTED_ACCOUNT);
+        DataListHolder<LineItemPlacements> lineItemPlacements = twitter.lineItemOperations().getLineItemPlacements(
+                new LineItemPlacementsQueryBuilder()
+                        .withProductTypes(productTypes));
+
+        assertLineItemPlacementsWithParamsContents(lineItemPlacements.getList());
+    }
+
+	private void assertLineItemPlacementsContents(List<LineItemPlacements> lineItemPlacements) {
         assertEquals(2, lineItemPlacements.size());
         assertEquals(6, lineItemPlacements.get(0).getPlacements().size());
         assertEquals(AdvertisingPlacement.TWITTER_TIMELINE, lineItemPlacements.get(0).getPlacements().get(3).get(1));
 	}
 
-	private void assertLineItemContents(List<LineItem> lineItems) {
+    private void assertLineItemPlacementsWithParamsContents(List<LineItemPlacements> lineItemPlacements) {
+        assertEquals(1, lineItemPlacements.size());
+        assertEquals(1, lineItemPlacements.get(0).getPlacements().size());
+        assertEquals(AdvertisingPlacement.ALL_ON_TWITTER, lineItemPlacements.get(0).getPlacements().get(0).get(0));
+	}
+
+    private void assertLineItemContents(List<LineItem> lineItems) {
         assertEquals(22, lineItems.size());
 
         assertEquals("awvv", lineItems.get(0).getId());
